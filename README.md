@@ -554,7 +554,7 @@ Run a script with `tools\dev\kinora-run.ps1 -Script <file>`, or copy it to
 | `click x y [button]`, `mousedown x y [button]`, `mouseup [button]`, `move x y`, `drag x1 y1 x2 y2`, `scroll x y n` | Mouse input. Coordinates are GUI-scaled, or percentages such as `35% 40%`. |
 | `button <label>` | Clicks the button whose label matches (an exact match wins). |
 | `cycle <label> until <text>` | Clicks a cycling button until its label contains the text. |
-| `mark`, `state` | Remembers the camera position; logs the screen, replay time, editor and camera. |
+| `mark`, `state` | Remembers the camera position; logs the screen, game time and time of day, replay time, editor and camera. |
 | `property <name> [value]` | Sets a system property (`kinora.dev.renderTrace` logs every captured frame). |
 | `samerenders [pixels]` | Checks that the last two renders match file by file; up to `pixels` differing pixels per image pass. |
 | `log <text>`, `quit` | Writes to the log; closes the game. |

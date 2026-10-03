@@ -11,6 +11,7 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectLinkedOpenHashMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectLinkedOpenHashMap;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.network.ProtocolInfo;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
@@ -23,6 +24,8 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.network.protocol.game.*;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.BossEvent;
+import net.minecraft.world.clock.ClockNetworkState;
+import net.minecraft.world.clock.WorldClock;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.PositionMoveRotation;
 import net.minecraft.world.item.ItemStack;
@@ -86,6 +89,22 @@ public final class StateModel {
     private final LinkedHashMap<Integer, Captured> clientState = new LinkedHashMap<>();
     private final LinkedHashMap<Integer, Captured> modState = new LinkedHashMap<>();
     private @Nullable ProtocolInfo<?> playProtocol;
+    /**
+     * The world clocks (time of day and the like) as the client has them at {@link #clockGameTime}.
+     * Servers send a clock's state only when a player joins or it changes (/time set, sleeping);
+     * the time packet sent every second carries the game time alone. The last time packet is
+     * therefore not enough to rebuild the time of day, and this follows the clocks the way
+     * {@code ClientClockManager} does.
+     */
+    private final LinkedHashMap<Holder<WorldClock>, ClockMirror> clocks = new LinkedHashMap<>();
+    private long clockGameTime;
+
+    /** One clock, advanced exactly as {@code ClientClockManager.ClockInstance} is. */
+    private static final class ClockMirror {
+        long totalTicks;
+        float partialTick;
+        float rate = 1.0F;
+    }
 
     private static final class ChunkState {
         final Captured data;
@@ -389,7 +408,10 @@ public final class StateModel {
 
             // World-wide values: only the last one matters.
             case ClientboundChangeDifficultyPacket p -> latest.put("difficulty", frame);
-            case ClientboundSetTimePacket p -> latest.put("time", frame);
+            case ClientboundSetTimePacket p -> {
+                onTime(p);
+                latest.put("time", frame);
+            }
             case ClientboundSetChunkCacheCenterPacket p -> latest.put("chunkCenter", frame);
             case ClientboundSetChunkCacheRadiusPacket p -> latest.put("chunkRadius", frame);
             case ClientboundSetSimulationDistancePacket p -> latest.put("simulationDistance", frame);
@@ -590,7 +612,26 @@ public final class StateModel {
         latest.keySet().removeIf(k -> k.startsWith("destruction:"));
     }
 
+    private void onTime(ClientboundSetTimePacket p) {
+        long delta = p.gameTime() - clockGameTime;
+        clockGameTime = p.gameTime();
+        for (ClockMirror c : clocks.values()) {
+            double partial = c.partialTick + (double) delta * c.rate;
+            long whole = (long) Math.floor(partial);
+            c.partialTick = (float) (partial - whole);
+            c.totalTicks += whole;
+        }
+        p.clockUpdates().forEach((clock, state) -> {
+            ClockMirror c = clocks.computeIfAbsent(clock, k -> new ClockMirror());
+            c.totalTicks = state.totalTicks();
+            c.partialTick = state.partialTick();
+            c.rate = state.rate();
+        });
+    }
+
     private void resetConnectionState() {
+        clocks.clear();
+        clockGameTime = 0;
         latest.clear();
         lists.clear();
         playerInfo.clear();
@@ -634,6 +675,15 @@ public final class StateModel {
         for (Map.Entry<String, Captured> e : latest.entrySet()) {
             if (e.getKey().equals("chunksLoadStart")) {
                 chunksLoadStart = e.getValue();
+            } else if (e.getKey().equals("time")) {
+                // Every clock as of the last time packet, then that packet itself: playback moves
+                // the packet on to the snapshot's tick, and the client moves the clocks with it.
+                if (!clocks.isEmpty()) {
+                    Map<Holder<WorldClock>, ClockNetworkState> states = new LinkedHashMap<>();
+                    clocks.forEach((clock, c) -> states.put(clock, new ClockNetworkState(c.totalTicks, c.partialTick, c.rate)));
+                    out.add(synth(new ClientboundSetTimePacket(clockGameTime, states)));
+                }
+                out.add(new Ref(e.getValue()));
             } else if (!e.getKey().startsWith("destruction:")) {
                 out.add(new Ref(e.getValue()));
             }

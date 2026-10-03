@@ -93,7 +93,18 @@ public final class ReplaySession implements PlaybackFilter.Observer, TimeHooks.S
             modTracks.put(t.index(), t);
         }
         clock.setEnd(Math.max(metadata.endTick, file.lastTick()));
-        serverData = new ServerData("Kinora Replay", "kinora.replay", ServerData.Type.OTHER);
+        serverData = new ServerData(serverName(metadata), "kinora.replay", ServerData.Type.OTHER);
+    }
+
+    /**
+     * The name the replay's connection goes by. Mods keep per-server data under the server's name
+     * (Distant Horizons its far terrain, by default), so a multiplayer replay takes the recorded
+     * server's name and finds that data. The address stays Kinora's own: the game saves a server's
+     * details over the server-list entry with the same name and address, and a replay must not.
+     */
+    static String serverName(ReplayMetadata metadata) {
+        return metadata.singleplayer || metadata.serverName == null || metadata.serverName.isBlank()
+                ? "Kinora Replay" : metadata.serverName;
     }
 
     public KinoraFile file() {

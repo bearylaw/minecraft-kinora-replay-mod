@@ -647,6 +647,9 @@ public final class DevScript {
     private static String state(Minecraft mc) {
         ReplayManager manager = ReplayManager.INSTANCE;
         StringBuilder sb = new StringBuilder("screen=").append(screenName(mc.gui.screen()));
+        if (mc.level != null) {
+            sb.append(" gameTime=").append(mc.level.getGameTime()).append(" dayTime=").append(mc.level.getDefaultClockTime());
+        }
         var session = manager.session();
         if (session != null) {
             sb.append(String.format(Locale.ROOT, " time=%.2f paused=%s", session.clock().time() / 20.0, session.paused()));

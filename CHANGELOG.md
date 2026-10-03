@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased
+
+- Fixed: replays recorded on a server showed the wrong time of day. Servers send the time of day
+  only when a player joins or it changes; Kinora now keeps it and writes it into every recording
+  and snapshot.
+- Distant Horizons' far terrain shows in replays recorded on a server: the replay goes by the
+  recorded server's name, so Distant Horizons finds the data it saved there.
+- The dev script's `state` logs the game time and the time of day.
+
 ## 0.1.0 (2026-10-03)
 
 First release, for Minecraft 26.2 and NeoForge 26.2.0.88, client only. It is the release candidate
