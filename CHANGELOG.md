@@ -1,11 +1,5 @@
 # Changelog
 
-## Unreleased
-
-- Fixed: the game crashed a few seconds into a recording when the window's width and height had no
-  common factor for the thumbnail (for example 3440 x 1369). Kinora now shrinks the thumbnail
-  itself, and a thumbnail that cannot be taken is skipped instead of stopping the game.
-
 ## 0.1.0 (2026-10-03)
 
 First release, for Minecraft 26.2 and NeoForge 26.2.0.88, client only. It is the release candidate
@@ -28,6 +22,9 @@ below plus these changes.
   recordings show all skin layers.
 - While a replay is open, other mods' key bindings (and vanilla actions) are switched off; only
   Kinora's keys, camera movement, screenshot and fullscreen act.
+- Recording thumbnails work at any window size. The game crashed a few seconds into a recording
+  when width and height had no common factor (for example 3440 x 1369); Kinora now shrinks the
+  thumbnail itself, and a thumbnail that cannot be taken is skipped instead of stopping the game.
 
 ### Rendering
 
