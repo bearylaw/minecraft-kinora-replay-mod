@@ -1,0 +1,120 @@
+plugins {
+    id 'java-library'
+    id 'net.neoforged.moddev' version '2.0.148'
+}
+
+description = 'Kinora for NeoForge: the mod itself.'
+
+base {
+    archivesName = mod_jar_name
+}
+
+// kinora-replay-<mod version>-<Minecraft version>.jar (and -sources): see mod_jar_name in gradle.properties.
+tasks.withType(Jar).configureEach {
+    archiveVersion = "${mod_version}-${minecraft_version}"
+}
+
+neoForge {
+    version = neo_version
+
+    runs {
+        client {
+            client()
+            // run/ at the repository root, where tools/dev expects the dev client's game folder.
+            gameDirectory = rootProject.file('run')
+            // -Pworld="Name" joins that singleplayer world straight from launch (tools/dev/mc-devclient.ps1).
+            if (project.hasProperty('world')) {
+                programArguments.addAll '--quickPlaySingleplayer', project.property('world').toString()
+            }
+            // -Preplay="file.kinora" opens that replay straight from launch (for scripted tests).
+            if (project.hasProperty('replay')) {
+                systemProperty 'kinora.dev.openReplay', project.property('replay').toString()
+            }
+            // -PnoGlValidation: dev runs with Iris need this until IrisShaders/Iris#3304 is fixed
+            // (Iris breaks a draw check that only runs in development environments).
+            if (project.hasProperty('noGlValidation')) {
+                systemProperty 'neoforge.disableGlValidation', 'true'
+            }
+            if (project.hasProperty('kinoraScript')) {
+                systemProperty 'kinora.dev.script', project.property('kinoraScript').toString()
+            }
+            // -Pserver=localhost:25566 joins that server straight from launch (multiplayer recording tests).
+            if (project.hasProperty('server')) {
+                programArguments.addAll '--quickPlayMultiplayer', project.property('server').toString()
+            }
+            // -PgraphicsBackend=vulkan (or opengl) overrides the video setting for this launch.
+            if (project.hasProperty('graphicsBackend')) {
+                programArguments.addAll '--graphicsBackend', project.property('graphicsBackend').toString()
+            }
+        }
+        // A local dedicated server for multiplayer recording tests (tools/dev/mc-devserver.ps1).
+        // Kinora is client-only and does not load here. Dev servers accept the EULA by themselves.
+        server {
+            server()
+            gameDirectory = rootProject.file('run-server')
+            programArguments.add '--nogui'
+        }
+        configureEach {
+            logLevel = org.slf4j.event.Level.INFO
+        }
+    }
+
+    mods {
+        "${mod_id}" {
+            sourceSet sourceSets.main
+            sourceSet project(':kinora-core').sourceSets.main
+            sourceSet project(':kinora-api').sourceSets.main
+        }
+    }
+}
+
+configurations {
+    runtimeClasspath.extendsFrom localRuntime
+}
+
+dependencies {
+    implementation project(':kinora-core')
+    implementation project(':kinora-api')
+    // Pure-Java zstd, nested in the mod jar.
+    jarJar(implementation("io.airlift:aircompressor-v3:${aircompressor_version}"))
+
+    testImplementation platform("org.junit:junit-bom:${junit_version}")
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+// core and api classes travel inside the mod jar; other mods compile against the separate
+// kinora-api artifact and find the classes here at runtime.
+tasks.named('jar', Jar) {
+    // The bundled API classes are LGPL-3.0-only.
+    from(rootProject.file('LICENSE-API')) { into 'META-INF' }
+    from(project(':kinora-core').sourceSets.main.output)
+    from(project(':kinora-api').sourceSets.main.output)
+    manifest {
+        attributes(
+                'Implementation-Title': mod_name,
+                'Implementation-Version': mod_version,
+        )
+    }
+}
+
+// Expands gradle.properties into neoforge.mods.toml.
+var generateModMetadata = tasks.register('generateModMetadata', ProcessResources) {
+    var replaceProperties = [
+            minecraft_version      : minecraft_version,
+            minecraft_version_range: minecraft_version_range,
+            neo_version            : neo_version,
+            mod_id                 : mod_id,
+            mod_name               : mod_name,
+            mod_license            : mod_license,
+            mod_version            : mod_version,
+            mod_authors            : mod_authors,
+            mod_description        : mod_description,
+    ]
+    inputs.properties replaceProperties
+    expand replaceProperties
+    from 'src/main/templates'
+    into 'build/generated/sources/modMetadata'
+}
+sourceSets.main.resources.srcDir generateModMetadata
+neoForge.ideSyncTask generateModMetadata

@@ -1,0 +1,25 @@
+# Recording with detected events: chat, explosion, death.
+wait 4
+key f6
+wait 2
+key t
+wait 0.3
+type /say hello markers
+key enter
+wait 1.5
+key t
+wait 0.3
+type /summon tnt ~ ~ ~4
+key enter
+wait 6
+key t
+wait 0.3
+type /kill
+key enter
+wait 2
+screenshot death
+button Respawn
+wait 3
+key f6
+wait 3
+log recording done

@@ -1,0 +1,32 @@
+license="MIT"
+
+[[mods]]
+modId="kinora_sample"
+version="${version}"
+displayName="Kinora Sample: Sparkles"
+description='''
+Shows how a mod becomes replay-aware with the Kinora API: a key makes a burst of sparkles; Kinora
+records it in a data track and plays it back in replays and renders.
+'''
+
+[[dependencies.kinora_sample]]
+    modId="neoforge"
+    type="required"
+    versionRange="[${neo_version},)"
+    ordering="NONE"
+    side="CLIENT"
+
+[[dependencies.kinora_sample]]
+    modId="minecraft"
+    type="required"
+    versionRange="${minecraft_version_range}"
+    ordering="NONE"
+    side="CLIENT"
+
+# Optional: the mod works without Kinora; with it, sparkles appear in replays.
+[[dependencies.kinora_sample]]
+    modId="kinora"
+    type="optional"
+    versionRange="[0.1,)"
+    ordering="NONE"
+    side="CLIENT"

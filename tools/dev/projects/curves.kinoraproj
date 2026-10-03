@@ -1,0 +1,17 @@
+{
+  "name": "Curves",
+  "shots": [
+    {
+      "id": "zoom",
+      "name": "Eased zoom",
+      "duration": 6,
+      "tracks": {
+        "time": {"keys": [{"time": 0, "value": [40], "interpolation": "LINEAR"}, {"time": 6, "value": [160], "interpolation": "LINEAR"}]},
+        "camera.position": {"keys": [{"time": 0, "value": [30, -55, 60], "interpolation": "BEZIER", "outValue": [0, 2, 0]}, {"time": 6, "value": [45, -56, 62], "interpolation": "BEZIER", "inValue": [-3, 0, -1]}]},
+        "camera.rotation": {"keys": [{"time": 0, "value": [0, 15]}]},
+        "camera.fov": {"keys": [{"time": 0, "value": [80], "interpolation": "BEZIER", "outValue": [0]}, {"time": 3, "value": [40], "interpolation": "BEZIER", "inValue": [0], "outValue": [0]}, {"time": 6, "value": [70], "interpolation": "BEZIER", "inValue": [0]}]},
+        "grade.exposure": {"keys": [{"time": 0, "value": [0], "interpolation": "LINEAR"}, {"time": 6, "value": [1], "interpolation": "LINEAR"}]}
+      }
+    }
+  ]
+}

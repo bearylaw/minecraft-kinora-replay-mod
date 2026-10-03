@@ -1,0 +1,37 @@
+plugins {
+    id 'java-library'
+    id 'net.neoforged.moddev' version '2.0.148'
+}
+
+description = 'A small mod showing how another mod becomes replay-aware with the Kinora API.'
+
+base {
+    archivesName = "${mod_jar_name}-sample"
+}
+
+// kinora-replay-sample-<mod version>-<Minecraft version>.jar, like the mod's own jar.
+tasks.withType(Jar).configureEach {
+    archiveVersion = "${mod_version}-${minecraft_version}"
+}
+
+neoForge {
+    version = neo_version
+    mods {
+        kinora_sample {
+            sourceSet sourceSets.main
+        }
+    }
+}
+
+dependencies {
+    // Only the API, and only to compile: Kinora itself provides it at runtime, when it is installed.
+    compileOnly project(':kinora-api')
+}
+
+processResources {
+    var props = [version: mod_version, neo_version: neo_version, minecraft_version_range: minecraft_version_range]
+    inputs.properties props
+    filesMatching('META-INF/neoforge.mods.toml') {
+        expand props
+    }
+}

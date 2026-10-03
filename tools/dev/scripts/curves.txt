@@ -1,0 +1,10 @@
+# Bezier handles: the FOV track's eased curve shows in its timeline row; handles show in the world.
+open 2026-10-02_17-27-11_Test_Arena.kinora
+waitfor replay 120
+wait 1
+project load ../../../tools/dev/projects/curves.kinoraproj
+key e
+waitfor screen EditorScreen 5
+camera 36 -50 50 10 30
+wait 1
+screenshot curves

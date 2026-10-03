@@ -1,0 +1,10 @@
+# Reverse, freeze and a speed ramp (docs/examples/time-tricks.kinoraproj), plus the camera's start position.
+open 2026-10-02_17-27-11_Test_Arena.kinora
+waitfor replay 120
+wait 2
+state
+screenshot start-camera
+project load ../../../docs/examples/time-tricks.kinoraproj
+render sequence png 640 360 30
+waitfor rendered 600
+log time tricks rendered

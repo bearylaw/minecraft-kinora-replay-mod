@@ -1,0 +1,15 @@
+# Render dialog: the Extra row (depth pass, transparent sky) and the deep formats.
+open 2026-10-02_17-27-11_Test_Arena.kinora
+waitfor replay 120
+wait 2
+key e
+waitfor screen EditorScreen 5
+key ctrl+n
+wait 0.5
+key i
+button Render
+waitfor screen RenderScreen 5
+cycle Extra until pass, transparent
+cycle Format until OpenEXR
+wait 0.3
+screenshot dialog-passes

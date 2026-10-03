@@ -1,0 +1,18 @@
+plugins {
+    id 'application'
+}
+
+description = 'kinora-inspect: dump, validate and extract from .kinora files without starting the game.'
+
+dependencies {
+    implementation project(':kinora-core')
+
+    testImplementation platform("org.junit:junit-bom:${junit_version}")
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+application {
+    mainClass = 'dev.kinora.inspector.KinoraInspect'
+    applicationName = 'kinora-inspect'
+}

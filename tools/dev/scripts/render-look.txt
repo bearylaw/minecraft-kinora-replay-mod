@@ -1,0 +1,22 @@
+# A short render looking at the ground and the horizon, for checking resource packs and shaders.
+open 2026-10-02_17-27-11_Test_Arena.kinora
+waitfor replay 120
+wait 2
+key e
+waitfor screen EditorScreen 5
+key ctrl+n
+wait 0.5
+camera 0 3 0 0 35
+wait 0.3
+key i
+key end
+wait 0.5
+camera 0 3 6 0 35
+wait 0.3
+key i
+wait 0.3
+render shot png 1280 720 30
+waitfor rendered 300
+render shot png 1280 720 30
+waitfor rendered 300
+log look render finished

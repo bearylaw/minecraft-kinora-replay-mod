@@ -1,0 +1,6 @@
+open 2026-10-02_17-27-11_Test_Arena.kinora
+waitfor replay 120
+project load ../../../docs/examples/sunset.kinoraproj
+render sequence png 960 540 30
+waitfor rendered 600
+log sunset rendered

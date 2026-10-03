@@ -1,0 +1,56 @@
+# Editor smoke test: open a replay, make a two-key shot, preview it with Space.
+# Run: copy to run/kinora/dev/script.txt while the dev client is up, or launch with
+#   tools\dev\mc-devclient.ps1 -NoJoin -GradleArgs @("-PkinoraScript=<abs path to this file>")
+open 2026-10-02_17-27-11_Test_Arena.kinora
+waitfor replay 120
+wait 3
+screenshot 01-replay
+expect noscreen
+
+# Replays open paused; K toggles.
+expect paused
+key k
+expect playing
+wait 1
+key k
+expect paused
+
+key e
+waitfor screen EditorScreen 5
+key ctrl+n
+wait 0.5
+key i
+screenshot 02-first-key
+
+# Fly a little with the right mouse button and W, then key the end of the shot.
+key end
+wait 0.5
+state
+mark
+mousedown 35% 40% right
+down w
+wait 1.5
+up w
+mouseup right
+wait 0.3
+state
+expect moved 3
+key i
+screenshot 03-second-key
+
+# Space must start and stop the preview.
+key home
+wait 0.5
+waitfor screen EditorScreen 20
+key space
+wait 0.3
+expect playing
+wait 1.5
+screenshot 04-preview
+key space
+wait 0.3
+expect paused
+
+key escape
+waitfor noscreen 5
+log editor smoke finished

@@ -1,0 +1,12 @@
+# What is in a replay: entities at a few moments, and the current project as JSON.
+open 2026-10-02_17-27-11_Test_Arena.kinora
+waitfor replay 120
+wait 1
+seek 5
+wait 2
+entities entities-5s.json
+seek 20
+wait 2
+entities entities-20s.json
+project export project.json
+log discovery finished

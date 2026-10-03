@@ -1,0 +1,23 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+    }
+}
+
+plugins {
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '1.0.0'
+}
+
+rootProject.name = 'kinora'
+
+// Pure Java, no Minecraft: file format, timeline math, encoder pipeline, audio mixing.
+include 'kinora-core'
+// The small, stable surface other mods compile against.
+include 'kinora-api'
+// The NeoForge mod itself: capture, playback, rendering hooks, input and UI.
+include 'kinora-mc'
+// Command-line .kinora inspector.
+include 'kinora-inspector'
+project(':kinora-inspector').projectDir = file('tools/inspector')
+// A tiny mod showing how another mod becomes replay-aware.
+include 'sample-mod'

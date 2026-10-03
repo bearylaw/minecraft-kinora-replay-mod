@@ -1,0 +1,39 @@
+// Settings every module shares. Each module's own build.gradle adds what is particular to it.
+
+subprojects {
+    version = rootProject.mod_version
+    group = rootProject.mod_group_id
+
+    repositories {
+        mavenCentral()
+    }
+
+    plugins.withType(JavaPlugin).configureEach {
+        // Minecraft 26.x ships Java 25 to end users, so every module targets it.
+        java.toolchain.languageVersion = JavaLanguageVersion.of(25)
+        java.withSourcesJar()
+
+        tasks.withType(JavaCompile).configureEach {
+            options.encoding = 'UTF-8'
+            options.compilerArgs.addAll(['-Xlint:all,-processing,-serial,-classfile,-options', '-Xlint:-this-escape'])
+        }
+
+        tasks.withType(Test).configureEach {
+            useJUnitPlatform()
+            maxHeapSize = '2g'
+            testLogging {
+                events 'failed', 'skipped'
+                exceptionFormat 'full'
+            }
+        }
+
+        tasks.withType(Jar).configureEach {
+            // A module with its own LICENSE (sample-mod: MIT) ships that one instead of the root licence;
+            // kinora-api ships only LICENSE-API (its build.gradle).
+            if (project.path != ':kinora-api') {
+                from(project.file('LICENSE').exists() ? project.file('LICENSE') : rootProject.file('LICENSE')) { into 'META-INF' }
+            }
+            from(rootProject.file('THIRD_PARTY_NOTICES.md')) { into 'META-INF' }
+        }
+    }
+}

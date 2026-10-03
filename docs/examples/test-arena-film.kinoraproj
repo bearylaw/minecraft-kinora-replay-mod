@@ -1,0 +1,47 @@
+{
+  "name": "Test Arena film",
+  "shots": [
+    {
+      "id": "dolly",
+      "name": "Dolly past the mobs",
+      "duration": 6,
+      "notes": "Slides along the line of mobs at z 73.5, always aimed at its middle.",
+      "tracks": {
+        "time": {"keys": [{"time": 0, "value": [20], "interpolation": "LINEAR"}, {"time": 6, "value": [140], "interpolation": "LINEAR"}]},
+        "camera.position": {"keys": [
+          {"time": 0, "value": [22, -55.5, 63], "easing": "SINE_IN_OUT"},
+          {"time": 6, "value": [61, -55.5, 63]}
+        ]},
+        "camera.rotation": {"keys": [{"time": 0, "value": [0, 12]}]}
+      },
+      "lookAt": {"enabled": true, "point": {"x": 41.5, "y": -58, "z": 73.5}, "smoothing": 0}
+    },
+    {
+      "id": "orbit",
+      "name": "Orbit the player",
+      "duration": 6,
+      "tracks": {
+        "time": {"keys": [{"time": 0, "value": [200], "interpolation": "LINEAR"}, {"time": 6, "value": [320], "interpolation": "LINEAR"}]},
+        "orbit.radius": {"keys": [{"time": 0, "value": [7]}, {"time": 6, "value": [4.5]}]},
+        "orbit.height": {"keys": [{"time": 0, "value": [3]}, {"time": 6, "value": [1.5]}]},
+        "camera.fov": {"keys": [{"time": 0, "value": [60]}]}
+      },
+      "rig": {"mode": "ORBIT", "targetEntity": 1, "orbitSpeed": 35, "damping": 0.4}
+    },
+    {
+      "id": "slowmo",
+      "name": "Slow motion follow",
+      "duration": 4,
+      "tracks": {
+        "time": {"keys": [{"time": 0, "value": [320], "interpolation": "LINEAR"}, {"time": 4, "value": [360], "interpolation": "LINEAR"}]}
+      },
+      "rig": {"mode": "FOLLOW", "targetEntity": 1, "offset": {"x": 1.5, "y": 2.2, "z": -4}, "relative": true, "damping": 0.5},
+      "shake": {"preset": "HANDHELD", "seed": 7}
+    }
+  ],
+  "sequence": [
+    {"shotId": "dolly"},
+    {"shotId": "orbit", "transition": "DISSOLVE", "transitionDuration": 1.0},
+    {"shotId": "slowmo", "transition": "DIP_TO_BLACK", "transitionDuration": 0.6}
+  ]
+}

@@ -1,0 +1,28 @@
+# Renders the same shot twice at 1080p; samerenders checks the two folders are byte for byte the same.
+open 2026-10-02_17-27-11_Test_Arena.kinora
+waitfor replay 120
+wait 2
+key e
+waitfor screen EditorScreen 5
+key ctrl+n
+wait 0.5
+key i
+key end
+wait 0.5
+mousedown 35% 40% right
+down w
+wait 1.5
+up w
+mouseup right
+wait 0.3
+key i
+wait 0.3
+property kinora.dev.renderTrace
+render shot png 1920 1080 60
+waitfor rendered 600
+render shot png 1920 1080 60
+waitfor rendered 600
+# Allowed: a few single pixels on seams where two sections' water meets (seen: up to 2 on OpenGL,
+# 4 on Vulkan, in some frames). Everything else must match exactly.
+samerenders 4
+log both renders finished

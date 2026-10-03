@@ -1,0 +1,37 @@
+{
+  "name": "Graded",
+  "shots": [
+    {
+      "id": "warm",
+      "name": "Warm scope",
+      "duration": 4,
+      "notes": "Warm grade, 2.39:1 letterbox, vignette, grain and a little bloom.",
+      "tracks": {
+        "time": {"keys": [{"time": 0, "value": [200], "interpolation": "LINEAR"}, {"time": 4, "value": [280], "interpolation": "LINEAR"}]},
+        "grade.exposure": {"keys": [{"time": 0, "value": [0.2]}]},
+        "grade.contrast": {"keys": [{"time": 0, "value": [1.15]}]},
+        "grade.saturation": {"keys": [{"time": 0, "value": [1.15]}]},
+        "grade.temperature": {"keys": [{"time": 0, "value": [0.35]}]},
+        "fx.vignette": {"keys": [{"time": 0, "value": [0.55]}]},
+        "fx.grain": {"keys": [{"time": 0, "value": [0.35]}]},
+        "fx.bloom": {"keys": [{"time": 0, "value": [0.4]}]},
+        "fx.letterbox": {"keys": [{"time": 0, "value": [2.39]}]}
+      },
+      "rig": {"mode": "ORBIT", "targetEntity": 1, "orbitSpeed": 25}
+    },
+    {
+      "id": "bw",
+      "name": "Black and white",
+      "duration": 4,
+      "tracks": {
+        "time": {"keys": [{"time": 0, "value": [280], "interpolation": "LINEAR"}, {"time": 4, "value": [360], "interpolation": "LINEAR"}]},
+        "grade.saturation": {"keys": [{"time": 0, "value": [1]}, {"time": 2, "value": [0]}]},
+        "grade.contrast": {"keys": [{"time": 0, "value": [1.3]}]},
+        "fx.chromatic": {"keys": [{"time": 0, "value": [3]}]},
+        "fx.vignette": {"keys": [{"time": 0, "value": [0.8]}]}
+      },
+      "rig": {"mode": "FOLLOW", "targetEntity": 1, "offset": {"x": 1.2, "y": 2.0, "z": -3.5}}
+    }
+  ],
+  "sequence": [ {"shotId": "warm"}, {"shotId": "bw", "transition": "DISSOLVE", "transitionDuration": 0.5} ]
+}

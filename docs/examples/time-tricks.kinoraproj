@@ -1,0 +1,38 @@
+{
+  "name": "Time tricks",
+  "shots": [
+    {
+      "id": "reverse",
+      "name": "Reverse",
+      "duration": 3,
+      "tracks": {
+        "time": {"keys": [{"time": 0, "value": [360], "interpolation": "LINEAR"}, {"time": 3, "value": [300]}]}
+      },
+      "rig": {"mode": "FOLLOW", "targetEntity": 1, "offset": {"x": 0, "y": 2.5, "z": -5}, "damping": 0}
+    },
+    {
+      "id": "freeze",
+      "name": "Bullet time",
+      "duration": 4,
+      "tracks": {
+        "time": {"keys": [{"time": 0, "value": [240], "interpolation": "HOLD"}, {"time": 4, "value": [240]}]}
+      },
+      "rig": {"mode": "ORBIT", "targetEntity": 1, "orbitSpeed": 60},
+      "tracks_note": "unknown keys are ignored"
+    },
+    {
+      "id": "ramp",
+      "name": "Speed ramp",
+      "duration": 7,
+      "tracks": {
+        "time": {"keys": [{"time": 0, "value": [100]}, {"time": 2, "value": [140]}, {"time": 5, "value": [155]}, {"time": 7, "value": [195]}]}
+      },
+      "rig": {"mode": "FOLLOW", "targetEntity": 1, "offset": {"x": 1.2, "y": 2.0, "z": -3.5}, "damping": 0.4}
+    }
+  ],
+  "sequence": [
+    {"shotId": "reverse"},
+    {"shotId": "freeze"},
+    {"shotId": "ramp"}
+  ]
+}

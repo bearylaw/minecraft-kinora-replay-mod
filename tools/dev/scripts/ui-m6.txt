@@ -1,0 +1,42 @@
+# M6 UI: guide, command palette, add-track and value fields, replay keys, steady 360 preview.
+open 2026-10-02_17-27-11_Test_Arena.kinora
+waitfor replay 120
+wait 1
+key e
+waitfor screen EditorScreen 5
+button ?
+wait 0.3
+screenshot ui-guide
+key escape
+key ctrl+n
+wait 0.5
+key i
+wait 0.3
+key ctrl+k
+type orb
+wait 0.3
+screenshot ui-palette
+key escape
+key ctrl+k
+type vignette
+key enter
+wait 0.5
+screenshot ui-track
+key escape
+waitfor noscreen 5
+key escape
+waitfor screen ReplayMenuScreen 5
+button Replay keys
+waitfor screen ReplayKeysScreen 5
+screenshot ui-keys
+key escape
+key escape
+waitfor noscreen 5
+renderset {"projection":"EQUIRECTANGULAR","audio":false}
+render shot png 2048 1024 30
+wait 1.5
+screenshot ui-preview-a
+wait 0.7
+screenshot ui-preview-b
+waitfor rendered 300
+log ui done

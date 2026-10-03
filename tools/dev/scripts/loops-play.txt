@@ -1,0 +1,15 @@
+# Renders the newest recording (loops-record.txt) with sound: minecart and bees must be heard.
+open latest
+waitfor replay 120
+wait 2
+key e
+waitfor screen EditorScreen 5
+key ctrl+n
+wait 0.5
+key i
+key escape
+waitfor noscreen 5
+renderset {"audio": true, "fileName": "loops_play"}
+render shot video 960 540 30 1 libx264 mp4
+waitfor rendered 300
+log loops rendered

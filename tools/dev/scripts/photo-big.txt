@@ -1,0 +1,7 @@
+# A 20000-wide photo: larger than 16384, so it is rendered in tiles and joined.
+open 2026-10-02_17-27-11_Test_Arena.kinora
+waitfor replay 120
+wait 2
+photo 20000
+waitfor rendered 600
+log big photo done

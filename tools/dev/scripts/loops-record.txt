@@ -1,0 +1,27 @@
+# Continuous sounds: bees and a minecart rolling on rails (run with -Join). Play back with loops-play.txt.
+wait 4
+key f6
+wait 1
+key t
+wait 0.3
+type /fill ~-12 ~ ~4 ~12 ~ ~4 minecraft:rail
+key enter
+wait 0.5
+key t
+wait 0.3
+type /summon minecraft:minecart ~-11 ~ ~4 {Motion:[1.2d,0.0d,0.0d]}
+key enter
+wait 0.5
+key t
+wait 0.3
+type /summon minecraft:bee ~3 ~2 ~1
+key enter
+wait 0.3
+key t
+wait 0.3
+type /summon minecraft:bee ~-2 ~2 ~2
+key enter
+wait 7
+key f6
+wait 2
+log recording done

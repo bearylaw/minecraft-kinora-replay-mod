@@ -1,0 +1,23 @@
+# Live cut: the film's three shots are the cameras; cut between them while the replay plays.
+open 2026-10-02_17-27-11_Test_Arena.kinora
+waitfor replay 120
+wait 1
+project load ../../../docs/examples/test-arena-film.kinoraproj
+seek 2
+wait 1
+key r
+wait 1.5
+key 2
+wait 1.5
+screenshot live-cut
+key 3
+wait 1.2
+key 1
+wait 1
+key r
+wait 0.5
+project export live-cut.kinoraproj
+renderset {"audio": true, "fileName": "live_cut"}
+render sequence video 960 540 30 1 libx264 mp4
+waitfor rendered 300
+log live cut rendered

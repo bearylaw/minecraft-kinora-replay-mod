@@ -1,0 +1,29 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+}
+
+description = 'Kinora API: what other mods compile against to become replay-aware. LGPL-3.0-only.'
+
+dependencies {
+    testImplementation platform("org.junit:junit-bom:${junit_version}")
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.withType(Jar).configureEach {
+    // The API alone is LGPL; its jar carries that licence rather than the root one (see the root build.gradle).
+    from(rootProject.file('LICENSE-API')) { into 'META-INF' }
+}
+
+publishing {
+    publications {
+        register('mavenJava', MavenPublication) {
+            artifactId = 'kinora-api'
+            from components.java
+        }
+    }
+    repositories {
+        maven { url = rootProject.layout.projectDirectory.dir('repo') }
+    }
+}

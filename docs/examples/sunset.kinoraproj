@@ -1,0 +1,19 @@
+{
+  "name": "Sunset",
+  "shots": [
+    {
+      "id": "sunset",
+      "name": "Sunset and rain",
+      "duration": 6,
+      "notes": "The sun sets over the arena while rain rolls in: world.time sweeps, world.weather fades from clear to rain.",
+      "tracks": {
+        "time": {"keys": [{"time": 0, "value": [100], "interpolation": "LINEAR"}, {"time": 6, "value": [220], "interpolation": "LINEAR"}]},
+        "camera.position": {"keys": [{"time": 0, "value": [20, -50, 30], "easing": "SINE_IN_OUT"}, {"time": 6, "value": [24, -48, 26]}]},
+        "camera.rotation": {"keys": [{"time": 0, "value": [-120, -5]}, {"time": 6, "value": [-110, -8]}]},
+        "world.time": {"keys": [{"time": 0, "value": [11500], "interpolation": "LINEAR"}, {"time": 6, "value": [13200]}]},
+        "world.weather": {"keys": [{"time": 0, "value": [0], "easing": "SINE_IN_OUT"}, {"time": 6, "value": [1]}]}
+      }
+    }
+  ],
+  "sequence": [ {"shotId": "sunset"} ]
+}

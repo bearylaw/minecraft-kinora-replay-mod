@@ -1,0 +1,17 @@
+# The recording player walking and crouching (run with -Join). Play back with walk-play.txt.
+wait 4
+key f6
+wait 1
+down w
+wait 2.5
+up w
+down d
+wait 1.5
+up d
+down shift
+wait 1
+up shift
+wait 1
+key f6
+wait 2
+log recording done

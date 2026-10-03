@@ -1,0 +1,15 @@
+# 360-degree and stereo renders of the orbit shot.
+open 2026-10-02_17-27-11_Test_Arena.kinora
+waitfor replay 120
+project load ../../../docs/examples/test-arena-film.kinoraproj
+shot Orbit the player
+renderset {"projection":"EQUIRECTANGULAR","audio":false}
+render shot png 2048 1024 30
+waitfor rendered 600
+renderset {"projection":"STEREO_SIDE_BY_SIDE","stereoEyeDistance":0.4}
+render shot png 1920 1080 30
+waitfor rendered 600
+renderset {"projection":"CUBEMAP"}
+render shot png 1536 1024 30
+waitfor rendered 600
+log views rendered

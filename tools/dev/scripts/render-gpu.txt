@@ -1,0 +1,18 @@
+# Render dialog: the GPU encoder is offered when it works, and renders.
+open 2026-10-02_17-27-11_Test_Arena.kinora
+waitfor replay 120
+wait 2
+key e
+waitfor screen EditorScreen 5
+key ctrl+n
+wait 0.5
+key i
+button Render
+waitfor screen RenderScreen 5
+wait 3
+cycle Format until GPU
+wait 0.3
+screenshot dialog-gpu
+button Render now
+waitfor rendered 300
+log gpu render done

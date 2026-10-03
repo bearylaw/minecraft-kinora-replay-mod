@@ -1,0 +1,38 @@
+# Video renders: H.264, H.265 and ProRes, plus a stopped and resumed H.264 render (joined parts).
+open 2026-10-02_17-27-11_Test_Arena.kinora
+waitfor replay 120
+wait 2
+key e
+waitfor screen EditorScreen 5
+key ctrl+n
+wait 0.5
+key i
+key end
+wait 0.5
+mousedown 35% 40% right
+down w
+wait 1.5
+up w
+mouseup right
+wait 0.3
+key i
+render shot video 1920 1080 60 1 libx264 mp4
+waitfor rendered 300
+render shot video 1920 1080 60 1 libx265 mp4
+waitfor rendered 300
+render shot video 1920 1080 24 1 prores_ks mov
+waitfor rendered 300
+render shot video 1920 1080 60 1 libx264 mkv
+wait 2
+key escape
+waitfor rendered 20
+key e
+waitfor screen EditorScreen 5
+button Render
+waitfor screen RenderScreen 5
+button Queue
+waitfor screen RenderQueueScreen 5
+click 50% 40
+button Resume
+waitfor rendered 300
+log video renders finished

@@ -1,0 +1,27 @@
+open 2026-10-02_17-27-11_Test_Arena.kinora
+waitfor replay 120
+wait 1
+key e
+waitfor screen EditorScreen 5
+key ctrl+n
+wait 0.5
+camera 40 -55 20 180 10
+key i
+key end
+wait 1
+state
+camera 50 -53 5 135 10
+wait 0.3
+state
+key i
+wait 0.3
+state
+camera 30 -45 30 210 35
+wait 0.3
+state
+key home
+wait 0.5
+state
+waitfor screen EditorScreen 20
+wait 1
+state

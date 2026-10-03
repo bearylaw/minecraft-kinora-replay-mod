@@ -1,0 +1,25 @@
+# Render dialog: open it from the editor, render a PNG sequence, check the queue.
+open 2026-10-02_17-27-11_Test_Arena.kinora
+waitfor replay 120
+wait 2
+key e
+waitfor screen EditorScreen 5
+key ctrl+n
+wait 0.5
+key i
+button Render
+waitfor screen RenderScreen 5
+screenshot dialog-1
+cycle Format until PNG
+wait 0.3
+screenshot dialog-2
+button Render now
+waitfor rendered 300
+key e
+waitfor screen EditorScreen 5
+button Render
+waitfor screen RenderScreen 5
+button Queue
+waitfor screen RenderQueueScreen 5
+click 50% 40
+screenshot queue

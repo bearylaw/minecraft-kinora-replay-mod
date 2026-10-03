@@ -1,0 +1,19 @@
+# Path collision fix: a path dipping into the floor shows red; Ctrl+K "out of blocks" lifts it.
+open 2026-10-02_17-27-11_Test_Arena.kinora
+waitfor replay 120
+wait 1
+project load ../../../tools/dev/projects/through-floor.kinoraproj
+key e
+waitfor screen EditorScreen 5
+camera 30 -54 62 0 35
+wait 1
+screenshot path-blocked
+key ctrl+k
+wait 0.3
+type out of blocks
+wait 0.3
+key enter
+wait 1
+screenshot path-fixed
+project export path-fixed.kinoraproj
+log path fix done

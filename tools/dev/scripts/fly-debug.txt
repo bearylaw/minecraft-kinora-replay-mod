@@ -1,0 +1,19 @@
+# Editor right-drag fly: the camera must move while W is held.
+open 2026-10-02_17-27-11_Test_Arena.kinora
+waitfor replay 120
+wait 2
+key e
+waitfor screen EditorScreen 5
+key ctrl+n
+wait 0.5
+state
+mousedown 35% 40% right
+wait 0.2
+state
+down w
+wait 1.5
+state
+up w
+mouseup right
+wait 0.3
+state

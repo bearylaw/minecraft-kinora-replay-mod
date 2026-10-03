@@ -1,0 +1,41 @@
+name: Build
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 25 is what the mod targets. 21 is needed as well because NeoForm Runtime's own
+      # tooling executes on 21 regardless.
+      - name: Setup JDKs
+        uses: actions/setup-java@v4
+        with:
+          java-version: |
+            21
+            25
+          distribution: 'temurin'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      # Compiles every module and runs the kinora-core tests: file format, recording writer,
+      # timeline and camera maths, projects, render planning, frame assembly, audio, clips, sharing.
+      - name: Build and test
+        run: ./gradlew build
+
+      - name: Language file check
+        run: python3 tools/dev/check-lang.py
+
+      - name: Upload jars
+        uses: actions/upload-artifact@v4
+        with:
+          name: kinora
+          path: |
+            kinora-mc/build/libs/kinora-replay-*.jar
+            kinora-api/build/libs/kinora-api-*.jar
+            sample-mod/build/libs/kinora-replay-sample-*.jar
+            tools/inspector/build/distributions/*.zip

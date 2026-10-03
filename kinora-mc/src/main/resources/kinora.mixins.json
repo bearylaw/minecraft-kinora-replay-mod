@@ -1,0 +1,30 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "dev.kinora.mc.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [],
+  "client": [
+    "AvatarAccessor",
+    "CameraMixin",
+    "CameraTileMixin",
+    "ClientLevelTickMixin",
+    "ConnectionMixin",
+    "DeltaTrackerTimerMixin",
+    "GameRendererCaptureMixin",
+    "KeyMappingMixin",
+    "EntityRenderDispatcherMixin",
+    "FramerateLimitMixin",
+    "MinecraftGlowMixin",
+    "MinecraftTimingMixin",
+    "MoveEntityPacketAccessor",
+    "RotateHeadPacketAccessor",
+    "SectionResortMixin",
+    "SynchedEntityDataAccessor",
+    "SpriteAnimationMixin",
+    "TranslucentResortMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

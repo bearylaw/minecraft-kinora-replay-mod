@@ -1,0 +1,8 @@
+open 2026-10-02_17-27-11_Test_Arena.kinora
+waitfor replay 120
+project load ../../../docs/examples/test-arena-film.kinoraproj
+shot Orbit the player
+property kinora.dev.renderTrace
+renderset {"audio":false}
+render shot png 640 360 60
+waitfor rendered 600

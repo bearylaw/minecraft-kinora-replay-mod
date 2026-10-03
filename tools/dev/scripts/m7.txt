@@ -1,0 +1,39 @@
+# M7 extras: clip, photo, auto-director, trails, title, versions, share.
+open 2026-10-02_17-27-11_Test_Arena.kinora
+waitfor replay 120
+seek 12
+wait 2
+clip 8 20
+photo 1920
+waitfor rendered 120
+key e
+waitfor screen EditorScreen 5
+key ctrl+k
+type auto-director
+key enter
+wait 1.5
+screenshot m7-auto
+key ctrl+k
+type add title
+key enter
+wait 0.5
+screenshot m7-title
+key ctrl+k
+type save a version
+key enter
+wait 0.5
+key ctrl+k
+type share
+key enter
+wait 1
+key escape
+waitfor noscreen 5
+renderset {"audio":false}
+render shot png 960 540 30
+waitfor rendered 300
+open script_clip.kinora
+waitfor replay 120
+wait 2
+state
+screenshot m7-clip
+log m7 done

@@ -1,0 +1,14 @@
+{
+  "required": false,
+  "minVersion": "0.8",
+  "package": "dev.kinora.mc.mixin.compat",
+  "plugin": "dev.kinora.mc.mixin.compat.CompatMixinPlugin",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "IrisFrameCounterMixin",
+    "IrisTimerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 0
+  }
+}

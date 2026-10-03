@@ -1,0 +1,16 @@
+# Deep outputs and passes: EXR with a depth pass and transparent sky, 16-bit PNG with motion blur,
+# ProRes 4444 with alpha. Small and short, to check the files (see docs/STATUS.md).
+open 2026-10-02_17-27-11_Test_Arena.kinora
+waitfor replay 120
+wait 1
+project load ../../../docs/examples/test-arena-film.kinoraproj
+renderset {"passes": ["COLOR", "DEPTH"], "transparentSky": true, "audio": false, "fileName": "passes_exr"}
+render shot exr 640 360 24
+waitfor rendered 300
+renderset {"passes": ["COLOR"], "transparentSky": false, "fileName": "passes_png16"}
+render shot png16 640 360 24 4
+waitfor rendered 300
+renderset {"transparentSky": true, "pixelFormat": "yuva444p10le", "quality": 4, "fileName": "passes_prores"}
+render shot video 640 360 24 1 prores_ks mov
+waitfor rendered 300
+log passes rendered

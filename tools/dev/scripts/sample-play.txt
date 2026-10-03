@@ -1,0 +1,22 @@
+# Play back and render the sample mod's sparkles.
+open latest
+waitfor replay 120
+seek 1.5
+wait 1
+key k
+wait 1.5
+screenshot sample-playback
+state
+key k
+key e
+waitfor screen EditorScreen 5
+key ctrl+k
+type auto-director
+key enter
+wait 1
+key escape
+waitfor noscreen 5
+renderset {"audio":false}
+render shot png 960 540 30
+waitfor rendered 300
+log sample done

@@ -1,0 +1,16 @@
+# Tiled renders: the same shot with 1, 2 and 3 tiles per axis (3 at an odd size, cropped).
+open 2026-10-02_17-27-11_Test_Arena.kinora
+waitfor replay 120
+wait 1
+project load ../../../docs/examples/test-arena-film.kinoraproj
+renderset {"audio": false, "tiles": 1, "fileName": "tiles_1"}
+render shot png 1280 720 30
+waitfor rendered 300
+renderset {"tiles": 2, "fileName": "tiles_2"}
+render shot png 1280 720 30
+waitfor rendered 300
+samerenders 20000
+renderset {"tiles": 3, "fileName": "tiles_3"}
+render shot png 1280 720 30
+waitfor rendered 300
+log tiles rendered

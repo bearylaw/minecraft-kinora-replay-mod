@@ -1,0 +1,19 @@
+# The puppet walks (limbs swing) and wears its outer skin layer: a close orbit around it, rendered.
+# Also: other mods' keys are silent in replays (pressing E / 1 here must only do Kinora things).
+open latest
+waitfor replay 120
+seek 1.5
+wait 1
+key e
+waitfor screen EditorScreen 5
+key ctrl+k
+wait 0.3
+type auto-director
+key enter
+wait 1
+key escape
+waitfor noscreen 5
+renderset {"audio": false, "fileName": "walk_orbit"}
+render shot png 960 540 20
+waitfor rendered 300
+log walk done

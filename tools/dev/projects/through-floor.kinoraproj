@@ -1,0 +1,16 @@
+{
+  "name": "Through the floor",
+  "shots": [
+    {
+      "id": "low",
+      "name": "Low dolly through the floor",
+      "duration": 5,
+      "notes": "A path 0.4 blocks into the arena floor between x 20 and 40; Path: move it out of blocks should lift it.",
+      "tracks": {
+        "time": {"keys": [{"time": 0, "value": [40], "interpolation": "LINEAR"}, {"time": 5, "value": [140], "interpolation": "LINEAR"}]},
+        "camera.position": {"keys": [{"time": 0, "value": [20, -58.5, 70]}, {"time": 2.5, "value": [30, -59.6, 70]}, {"time": 5, "value": [40, -58.5, 70]}]},
+        "camera.rotation": {"keys": [{"time": 0, "value": [-90, 5]}]}
+      }
+    }
+  ]
+}

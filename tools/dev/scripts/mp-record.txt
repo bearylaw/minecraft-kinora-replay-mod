@@ -1,0 +1,28 @@
+# Multiplayer recording: run with -Server localhost:25566 after tools\dev\mc-devserver.ps1.
+# Records chat, an explosion and some building over a real network connection (compressed packets).
+wait 5
+key f6
+wait 2
+key t
+wait 0.3
+type /say hello from the server
+key enter
+wait 1.5
+key t
+wait 0.3
+type /fill ~2 ~ ~2 ~6 ~4 ~6 minecraft:oak_planks
+key enter
+wait 2
+key t
+wait 0.3
+type /summon tnt ~ ~ ~8
+key enter
+wait 6
+key t
+wait 0.3
+type /time set 13000
+key enter
+wait 3
+key f6
+wait 3
+log recording done

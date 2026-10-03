@@ -1,0 +1,19 @@
+# Plays back the newest recording (made by mp-record.txt) and renders a few seconds of it.
+open latest
+waitfor replay 120
+wait 2
+screenshot mp-start
+seek 12
+wait 2
+screenshot mp-seek
+key e
+waitfor screen EditorScreen 5
+key ctrl+n
+wait 0.5
+key i
+key escape
+waitfor noscreen 5
+renderset {"audio": true, "fileName": "mp_play"}
+render shot video 960 540 30 1 libx264 mp4
+waitfor rendered 300
+log playback rendered

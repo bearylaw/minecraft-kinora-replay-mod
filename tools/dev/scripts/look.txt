@@ -1,0 +1,15 @@
+# Look: the graded shot's look goes to every shot of the film.
+open 2026-10-02_17-27-11_Test_Arena.kinora
+waitfor replay 120
+wait 1
+project load ../../../docs/examples/graded.kinoraproj
+key e
+waitfor screen EditorScreen 5
+key ctrl+k
+wait 0.3
+type every shot this
+wait 0.3
+key enter
+wait 0.5
+project export look.kinoraproj
+log look done

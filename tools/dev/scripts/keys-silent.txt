@@ -1,0 +1,24 @@
+# Other mods' key mappings are silent in replays: the sample mod's V and vanilla's inventory key.
+# Run with the sample mod in run/mods.
+open latest
+waitfor replay 120
+wait 1
+down w
+wait 0.1
+keymapping key.forward active
+up w
+down v
+wait 0.1
+keymapping key.kinora_sample.sparkles silent
+up v
+down e
+wait 0.1
+keymapping key.inventory silent
+up e
+# E is the replay's editor key: it opened the editor, where other mods' keys stay silent too.
+waitfor screen EditorScreen 5
+down v
+wait 0.1
+keymapping key.kinora_sample.sparkles silent
+up v
+log keys done

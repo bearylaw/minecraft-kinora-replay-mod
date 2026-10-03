@@ -1,0 +1,14 @@
+open 2026-10-02_17-27-11_Test_Arena.kinora
+waitfor replay 120
+wait 1
+key e
+waitfor screen EditorScreen 5
+key ctrl+k
+type add title
+key enter
+wait 0.3
+key ctrl+k
+type add title
+key enter
+wait 0.5
+screenshot m7-titles

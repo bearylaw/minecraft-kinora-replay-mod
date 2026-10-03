@@ -1,0 +1,15 @@
+plugins {
+    id 'java-library'
+}
+
+description = 'Kinora core: file format, timeline math, rendering pipeline and audio. No Minecraft imports.'
+
+dependencies {
+    implementation "io.airlift:aircompressor-v3:${aircompressor_version}"
+    // Minecraft ships this exact version; the mod jar uses Minecraft's copy.
+    api "com.google.code.gson:gson:${gson_version}"
+
+    testImplementation platform("org.junit:junit-bom:${junit_version}")
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}

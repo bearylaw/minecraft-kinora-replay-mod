@@ -1,0 +1,48 @@
+Kinora Replay License
+
+Copyright (c) 2026 Bernhard Siegl (bearceptive). All rights reserved, except as granted below.
+
+This license covers everything in this repository and in the builds made from it ("the Software"),
+except:
+- kinora-api/, which is licensed under the GNU Lesser General Public License v3.0 only
+  (see LICENSE-API), also where its classes are included in the mod jar;
+- sample-mod/, which is licensed under the MIT License (see sample-mod/LICENSE);
+- third-party components, which keep their own licenses (see THIRD_PARTY_NOTICES.md).
+
+"Official sources" are the releases of github.com/bearylaw/minecraft-kinora-replay-mod and the
+Kinora Replay projects published by bearceptive on Modrinth and CurseForge.
+
+1. You may:
+   a. read and study the source code;
+   b. download builds from official sources and use them, including to make videos, streams,
+      screenshots and other works, commercial or not; what you make with the Software is yours;
+   c. build the Software from source for your own use;
+   d. fork the repository on GitHub to prepare changes and offer them back as pull requests;
+   e. include the Software in a modpack, as long as the modpack obtains the file from an official
+      source (by referring to the official Modrinth or CurseForge project) instead of carrying a
+      copy of it.
+
+2. Without prior written permission from the copyright holder, you may not:
+   a. publish, upload, host, mirror or otherwise distribute the Software or any build of it,
+      original or modified, compiled or as source (beyond the GitHub forks allowed in 1d), on mod
+      platforms such as Modrinth or CurseForge or anywhere else;
+   b. publish modified versions of the Software, or software that contains substantial parts of
+      it;
+   c. sell the Software, or charge for access to it;
+   d. remove or change this license or the copyright notices.
+
+3. Contributions. By submitting a contribution (for example a pull request), you confirm that you
+   have the right to submit it, and you grant the copyright holder a perpetual, worldwide,
+   non-exclusive, royalty-free, irrevocable license to use, modify, distribute, sublicense and
+   relicense it under any terms.
+
+4. Termination. If you break this license, the rights it grants you end automatically.
+
+5. No warranty. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+   INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
+   AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+   DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Kinora Replay is not an official Minecraft product. It is not approved by or associated with
+Mojang or Microsoft.

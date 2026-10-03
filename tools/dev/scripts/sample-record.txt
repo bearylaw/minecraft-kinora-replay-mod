@@ -1,0 +1,11 @@
+# Record two sparkle bursts with the sample mod.
+wait 4
+key f6
+wait 2
+key v
+wait 1.5
+key v
+wait 2
+key f6
+wait 3
+log recorded

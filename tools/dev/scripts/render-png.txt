@@ -1,0 +1,26 @@
+# Offline render smoke test: a 5 s two-key shot to a PNG sequence at 640x360, 30 fps (150 frames).
+open 2026-10-02_17-27-11_Test_Arena.kinora
+waitfor replay 120
+wait 2
+key e
+waitfor screen EditorScreen 5
+key ctrl+n
+wait 0.5
+key i
+key end
+wait 0.5
+mousedown 35% 40% right
+down w
+wait 1.5
+up w
+mouseup right
+wait 0.3
+key i
+wait 0.3
+render shot png 640 360 30
+wait 1
+state
+screenshot render-progress
+waitfor rendered 300
+state
+log render finished

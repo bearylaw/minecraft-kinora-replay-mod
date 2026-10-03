@@ -1,0 +1,35 @@
+# Filled in from gradle.properties at build time (see generateModMetadata in kinora-mc/build.gradle).
+# Change mod identity there, not here. Format reference: https://docs.neoforged.net/docs/gettingstarted/modfiles
+
+license="${mod_license}"
+issueTrackerURL="https://github.com/bearylaw/minecraft-kinora-replay-mod/issues"
+
+[[mods]]
+modId="${mod_id}"
+version="${mod_version}"
+displayName="${mod_name}"
+authors="${mod_authors}"
+description='''
+${mod_description}
+'''
+
+[[mixins]]
+config="${mod_id}.mixins.json"
+
+# Optional: only applied when the other mod (Iris) is installed.
+[[mixins]]
+config="${mod_id}.compat.mixins.json"
+
+[[dependencies.${mod_id}]]
+    modId="neoforge"
+    type="required"
+    versionRange="[${neo_version},)"
+    ordering="NONE"
+    side="CLIENT"
+
+[[dependencies.${mod_id}]]
+    modId="minecraft"
+    type="required"
+    versionRange="${minecraft_version_range}"
+    ordering="NONE"
+    side="CLIENT"

@@ -1,0 +1,9 @@
+# Grading and lens effects (docs/examples/graded.kinoraproj).
+open 2026-10-02_17-27-11_Test_Arena.kinora
+waitfor replay 120
+project load ../../../docs/examples/graded.kinoraproj
+render sequence png 1280 720 30
+waitfor rendered 600
+render sequence video 1920 1080 60 1 libx264 mp4
+waitfor rendered 600
+log graded rendered

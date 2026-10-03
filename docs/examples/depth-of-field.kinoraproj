@@ -1,0 +1,33 @@
+{
+  "name": "Depth of field",
+  "shots": [
+    {
+      "id": "portrait",
+      "name": "Shallow orbit",
+      "duration": 4,
+      "notes": "f/1.4 at a long lens (FOV 35): the player is sharp, the arena melts away. Focus follows the orbit target automatically.",
+      "tracks": {
+        "time": {"keys": [{"time": 0, "value": [200], "interpolation": "LINEAR"}, {"time": 4, "value": [280], "interpolation": "LINEAR"}]},
+        "camera.fov": {"keys": [{"time": 0, "value": [35]}]},
+        "orbit.radius": {"keys": [{"time": 0, "value": [6]}]},
+        "dof.aperture": {"keys": [{"time": 0, "value": [1.4]}]}
+      },
+      "rig": {"mode": "ORBIT", "targetEntity": 1, "orbitSpeed": 20}
+    },
+    {
+      "id": "rack",
+      "name": "Rack focus",
+      "duration": 4,
+      "notes": "Focus pulls from 4 blocks to 40 blocks halfway through.",
+      "tracks": {
+        "time": {"keys": [{"time": 0, "value": [100], "interpolation": "LINEAR"}, {"time": 4, "value": [180], "interpolation": "LINEAR"}]},
+        "camera.position": {"keys": [{"time": 0, "value": [30, -57.5, 60]}]},
+        "camera.rotation": {"keys": [{"time": 0, "value": [-30, 8]}]},
+        "camera.fov": {"keys": [{"time": 0, "value": [45]}]},
+        "dof.focus": {"keys": [{"time": 0, "value": [4], "easing": "SINE_IN_OUT"}, {"time": 1.5, "value": [4], "easing": "SINE_IN_OUT"}, {"time": 2.5, "value": [40]}]},
+        "dof.aperture": {"keys": [{"time": 0, "value": [2]}]}
+      }
+    }
+  ],
+  "sequence": [ {"shotId": "portrait"}, {"shotId": "rack"} ]
+}
