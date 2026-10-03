@@ -1,5 +1,6 @@
 package dev.kinora.mc.capture;
 
+import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.platform.NativeImage;
 
 import dev.kinora.api.Kinora;
@@ -42,6 +43,8 @@ public final class RecordingManager implements SoundEventListener {
     private static final int BUFFER_MARK_TICKS = 200;
     private static final int DISK_CHECK_TICKS = 100;
     private static final int THUMBNAIL_DELAY_TICKS = 60;
+    /** Thumbnails come out between this and twice this wide. */
+    private static final int THUMBNAIL_WIDTH = 320;
 
     private final PlayerStateRecorder playerState = new PlayerStateRecorder();
     private @Nullable CaptureSession session;
@@ -364,27 +367,59 @@ public final class RecordingManager implements SoundEventListener {
 
     private void takeThumbnail(CaptureSession live) {
         Minecraft mc = Minecraft.getInstance();
-        int width = mc.gameRenderer.mainRenderTarget().width;
-        int factor = Math.max(1, width / 320);
-        Screenshot.takeScreenshot(mc.gameRenderer.mainRenderTarget(), factor, image -> {
-            try (NativeImage img = image) {
-                int w = img.getWidth();
-                int h = img.getHeight();
-                int[] argb = new int[w * h];
-                for (int y = 0; y < h; y++) {
-                    for (int x = 0; x < w; x++) {
-                        int abgr = img.getPixel(x, y);
-                        argb[y * w + x] = (abgr & 0xFF00FF00) | ((abgr & 0xFF) << 16) | ((abgr >>> 16) & 0xFF);
+        RenderTarget target = mc.gameRenderer.mainRenderTarget();
+        int width = target.width;
+        int height = target.height;
+        // Minecraft only shrinks by a factor that divides both sides (3440x1369 has none above 1), so
+        // it shrinks by the largest one that does and the rest is averaged here.
+        int wanted = Math.max(1, width / THUMBNAIL_WIDTH);
+        int factor = largestCommonDivisorUpTo(width, height, wanted);
+        int step = Math.max(1, wanted / factor);
+        try {
+            Screenshot.takeScreenshot(target, factor, image -> {
+                try (NativeImage img = image) {
+                    int w = img.getWidth() / step;
+                    int h = img.getHeight() / step;
+                    int[] argb = new int[w * h];
+                    int samples = step * step;
+                    for (int y = 0; y < h; y++) {
+                        for (int x = 0; x < w; x++) {
+                            int r = 0;
+                            int g = 0;
+                            int b = 0;
+                            for (int j = 0; j < step; j++) {
+                                for (int i = 0; i < step; i++) {
+                                    int abgr = img.getPixel(x * step + i, y * step + j);
+                                    r += abgr & 0xFF;
+                                    g += (abgr >>> 8) & 0xFF;
+                                    b += (abgr >>> 16) & 0xFF;
+                                }
+                            }
+                            argb[y * w + x] = 0xFF000000 | (r / samples) << 16 | (g / samples) << 8 | (b / samples);
+                        }
                     }
+                    ActiveRecording active = live.recording();
+                    if (active != null) {
+                        active.writer().thumbnail(active.lastTick(), PngWriter.encodeArgb(w, h, argb, false, 6));
+                    }
+                } catch (RuntimeException e) {
+                    KinoraMod.LOG.warn("Could not capture a thumbnail", e);
                 }
-                ActiveRecording active = live.recording();
-                if (active != null) {
-                    active.writer().thumbnail(active.lastTick(), PngWriter.encodeArgb(w, h, argb, false, 6));
-                }
-            } catch (RuntimeException e) {
-                KinoraMod.LOG.warn("Could not capture a thumbnail", e);
+            });
+        } catch (RuntimeException e) {
+            // A replay without a thumbnail is fine; a crash in the middle of a recording is not.
+            KinoraMod.LOG.warn("Could not capture a thumbnail", e);
+        }
+    }
+
+    /** The largest number up to {@code limit} that divides both {@code a} and {@code b}; at least 1. */
+    static int largestCommonDivisorUpTo(int a, int b, int limit) {
+        for (int d = Math.max(1, limit); d > 1; d--) {
+            if (a % d == 0 && b % d == 0) {
+                return d;
             }
-        });
+        }
+        return 1;
     }
 
     private void checkDiskSpace(CaptureSession live) {
