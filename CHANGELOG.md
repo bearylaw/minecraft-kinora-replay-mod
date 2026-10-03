@@ -1,14 +1,5 @@
 # Changelog
 
-## Unreleased
-
-- Fixed: replays recorded on a server showed the wrong time of day. Servers send the time of day
-  only when a player joins or it changes; Kinora now keeps it and writes it into every recording
-  and snapshot.
-- Distant Horizons' far terrain shows in replays recorded on a server: the replay goes by the
-  recorded server's name, so Distant Horizons finds the data it saved there.
-- The dev script's `state` logs the game time and the time of day.
-
 ## 0.1.0 (2026-10-03)
 
 First release, for Minecraft 26.2 and NeoForge 26.2.0.88, client only. It is the release candidate
@@ -34,6 +25,10 @@ below plus these changes.
 - Recording thumbnails work at any window size. The game crashed a few seconds into a recording
   when width and height had no common factor (for example 3440 x 1369); Kinora now shrinks the
   thumbnail itself, and a thumbnail that cannot be taken is skipped instead of stopping the game.
+- Replays recorded on a server show the right time of day. Servers send the time of day only when
+  a player joins or it changes; Kinora keeps it and writes it into every recording and snapshot.
+- Distant Horizons' far terrain shows in replays recorded on a server: the replay goes by the
+  recorded server's name, so Distant Horizons finds the data it saved there.
 
 ### Rendering
 
@@ -77,6 +72,7 @@ below plus these changes.
 - Multiplayer: recorded on a local dedicated server and played back (`mc-devserver.ps1`, `-Server`).
 - Vulkan: renders work (`-Vulkan`; NeoForge's early window must be off).
 - `samerenders` script command checks two renders match.
+- The dev script's `state` logs the game time and the time of day.
 
 ## 0.1.0 release candidate (not published)
 
