@@ -382,7 +382,22 @@ public final class ReplaySession implements PlaybackFilter.Observer, TimeHooks.S
             setUpCamera(mc);
         } else if (packet instanceof ClientboundStartConfigurationPacket) {
             puppet.levelChanged();
+        } else if (packet instanceof net.minecraft.network.protocol.common.ClientboundCustomPayloadPacket custom
+                && custom.payload() instanceof net.neoforged.neoforge.network.payload.SyncAttachmentsPayload sync
+                && sync.target() instanceof net.neoforged.neoforge.network.payload.SyncAttachmentsPayload.EntityTarget(int id)
+                && filter != null && id == filter.recordedPlayerId()) {
+            puppet.rememberAttachments(attachmentKinds(sync), packet);
+        } else if (packet instanceof net.minecraft.network.protocol.game.ClientboundPlayerInfoUpdatePacket info
+                && info.actions().contains(net.minecraft.network.protocol.game.ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER)
+                && puppet.uuid() != null && mc.getConnection() != null
+                && info.newEntries().stream().anyMatch(e -> puppet.uuid().equals(e.profileId()))) {
+            puppet.realInfoArrived(mc.getConnection(), packet);
         }
+    }
+
+    private static String attachmentKinds(net.neoforged.neoforge.network.payload.SyncAttachmentsPayload sync) {
+        var registry = net.neoforged.neoforge.registries.NeoForgeRegistries.ATTACHMENT_TYPES;
+        return sync.types().stream().map(t -> String.valueOf(registry.getKey(t))).sorted().toList().toString();
     }
 
     /** The playback camera: listed as a spectator, flying, untouchable. */

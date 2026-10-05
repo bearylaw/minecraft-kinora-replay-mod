@@ -49,6 +49,7 @@ public final class KinoraClient {
         modBus.addListener(KinoraKeys::register);
         modBus.addListener(KinoraClient::registerLayers);
         modBus.addListener(dev.kinora.mc.render.DepthCopy::register);
+        modBus.addListener((net.neoforged.fml.event.lifecycle.FMLClientSetupEvent e) -> e.enqueueWork(dev.kinora.mc.compat.DistantHorizonsCompat::init));
 
         NeoForge.EVENT_BUS.addListener((ClientTickEvent.Pre e) -> ReplayManager.INSTANCE.onClientTickPre());
         NeoForge.EVENT_BUS.addListener(KinoraClient::onClientTickPost);

@@ -29,6 +29,18 @@ below plus these changes.
   a player joins or it changes; Kinora keeps it and writes it into every recording and snapshot.
 - Distant Horizons' far terrain shows in replays recorded on a server: the replay goes by the
   recorded server's name, so Distant Horizons finds the data it saved there.
+- Distant Horizons' far terrain also shows in replays recorded in singleplayer. Kinora points
+  Distant Horizons at the world's own data (a copy in `kinora/cache/distanthorizons`, so the world
+  is never written to). Recordings now note the save's folder name (`worldFolder`); older ones are
+  matched by the world's name.
+- Recorded players keep their own skins. An offline or development client cannot check the skin's
+  signature and showed a default skin, and after a seek the recording player sometimes came back
+  without one; both are fixed, also for recordings already made.
+- Other mods' synced data on the recording player (NeoForge attachments, such as a magic mod's robe)
+  shows in replays and renders, also after seeking.
+- **Player names** can be hidden and shown: V in a replay, the replay menu, or Ctrl+K in the editor.
+  The choice applies to renders and is remembered.
+- The friends list no longer opens on O in a replay, so O reaches the orbit camera again.
 
 ### Rendering
 
@@ -53,6 +65,10 @@ below plus these changes.
 
 ### Directing
 
+- The shot inspector shows where a shot sits in the replay: **Replay start** and **Replay end**
+  (m:ss.ss, or seconds), beside its length. Changing the start moves the shot; changing the end
+  makes it longer or shorter at the same speed (a shot with keyed speed changes keeps its length
+  and its changes are stretched).
 - Live cut: cut between up to nine cameras (shots) with 1-9 while the replay plays; the cuts become
   the edit.
 - No first-person hand in front of the replay camera.

@@ -666,6 +666,10 @@ public final class StateModel {
         if (respawn != null) {
             out.add(new Ref(respawn));
         }
+        // The player list first: the puppet takes the recording player's profile (and skin) from it.
+        for (Captured c : playerInfo.keySet()) {
+            out.add(new Ref(c));
+        }
         // Kinora's own records describing the recording player come early: playback spawns the
         // puppet from them, and server data for the player (entity data, effects) needs it.
         for (Captured c : clientState.values()) {
@@ -692,9 +696,6 @@ public final class StateModel {
             for (Captured c : deque) {
                 out.add(new Ref(c));
             }
-        }
-        for (Captured c : playerInfo.keySet()) {
-            out.add(new Ref(c));
         }
         for (ChunkState c : chunks.values()) {
             out.add(new Ref(c.data));

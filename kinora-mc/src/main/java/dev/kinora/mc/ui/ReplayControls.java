@@ -96,6 +96,7 @@ public final class ReplayControls {
             case EDITOR -> KinoraUi.openEditor();
             case PHOTO -> dev.kinora.mc.render.PhotoMode.take((modifiers & GLFW.GLFW_MOD_CONTROL) != 0 ? 15360 : shift ? 7680 : 3840);
             case LIVE_CUT -> dev.kinora.mc.editor.LiveCutSession.start();
+            case NAMES -> KinoraUi.toggleNames();
         }
         return true;
     }

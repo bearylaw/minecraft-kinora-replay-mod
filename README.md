@@ -117,7 +117,8 @@ raw keyboard events instead of key bindings are not covered.
 | E or Tab | Open the camera editor |
 | B | Photo: a 4K still of the current view (Shift: 8K, Ctrl: 16K) |
 | R | **Live cut**: direct while the replay plays (see the camera editor) |
-| Esc | Replay menu: editor, settings, replay keys, **Export clip...** (save a stretch as its own small replay), mod elements, exit |
+| V | Show / hide player names (also in the replay menu; renders follow it, and it is remembered) |
+| Esc | Replay menu: editor, settings, replay keys, **Export clip...** (save a stretch as its own small replay), player names, mod elements, exit |
 
 ### The camera editor
 
@@ -147,6 +148,9 @@ The first time the editor opens, a short guide explains the steps; the **?** but
   handles of the camera path are drawn in the world in yellow.
 - The selected shot in the strip has an orange outline. With many tracks, scroll the track names to
   scroll the timeline; scroll the inspector when it holds more than fits.
+- Under the shot's **Length** and **Speed**, **Replay start** and **Replay end** say which stretch of
+  the replay the shot shows (m:ss.ss from the replay's start; plain seconds work too). Type a new
+  start to move the shot; type a new end to make it longer or shorter at the same speed.
 - **Titles (n)...** next to Add track lists the shot's titles: type the text, choose top / middle /
   low, or add one. Timing, size, colour and fades are in the project file (`overlays`).
 - Ctrl+K → **Auto-director** adds three suggested shots of the subject (an orbit, a push-in and a
@@ -542,6 +546,8 @@ Run a script with `tools\dev\kinora-run.ps1 -Script <file>`, or copy it to
 | `project load <file>` | Replaces the open replay's project with a `.kinoraproj` file and selects its first shot. Undoable in the editor. A relative path is relative to `kinora/dev` (the repo's examples are `../../../docs/examples/...` from the dev client). |
 | `project export <file>` | Writes the project as JSON (relative paths go to `run/kinora/dev/`). |
 | `shot <name>` | Selects a shot by name. |
+| `names on\|off` | Shows or hides player names (as V does). |
+| `pathcheck [fix]` | Checks the selected shot every 0.05 s: where its camera is inside a block (`B`) or a block hides its subject (`H`). `fix` first moves a keyed path out of blocks. Seek near the shot first, so its chunks are loaded. |
 | `clip <start> <end>` | Exports seconds start..end of the open replay to `kinora/replays/script_clip.kinora`. |
 | `photo [width]` | A still of the current view (default 3840 wide), then `waitfor rendered`. |
 | `renderset {json}` | Overrides render settings for the following renders, for example `{"projection":"EQUIRECTANGULAR","audio":false}` or `{"musicPath":"D:/music/theme.mp3","musicVolume":0.6}`. Any field in [render settings](#rendering) can be set. |

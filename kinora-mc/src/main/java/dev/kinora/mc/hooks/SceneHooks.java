@@ -17,4 +17,8 @@ public final class SceneHooks {
     public static boolean glowing(Entity entity) {
         return ReplayManager.INSTANCE.active() && ReplayManager.INSTANCE.scene().highlighted(entity);
     }
+
+    public static boolean requireSecureSkin(boolean vanilla) {
+        return vanilla && !ReplayManager.INSTANCE.active();
+    }
 }

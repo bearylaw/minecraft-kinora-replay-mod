@@ -390,6 +390,13 @@ public class EditorScreen extends Screen {
             }
         });
         y += 30;
+        // Where the shot sits in the replay, as replay time (m:ss.ss, or seconds) from the replay's start.
+        double base = manager.session() == null ? 0 : manager.session().startTick();
+        field(x, y, w / 2 - 2, "kinora.inspector.replay_start", Ui.seconds((shot.replayTicks(0) - base) / 20),
+                v -> editor.setReplayStart(shot, base + parseClock(v, (shot.replayTicks(0) - base) / 20) * 20));
+        field(x + w / 2 + 2, y, w / 2 - 2, "kinora.inspector.replay_end", Ui.seconds((shot.replayTicks(shot.duration) - base) / 20),
+                v -> editor.setReplayEnd(shot, base + parseClock(v, (shot.replayTicks(shot.duration) - base) / 20) * 20));
+        y += 30;
         addRenderableWidget(Button.builder(Component.translatable("kinora.inspector.rig", Component.translatable(
                 "kinora.rig." + shot.rig.mode.name().toLowerCase(Locale.ROOT))), b -> {
             Shot.RigMode next = Shot.RigMode.values()[(shot.rig.mode.ordinal() + 1) % Shot.RigMode.values().length];
@@ -512,6 +519,8 @@ public class EditorScreen extends Screen {
             afterProjectChange();
         }));
         a.add(act("kinora.palette.save", "Ctrl+S", this::save));
+        a.add(act(ReplayManager.INSTANCE.scene().hideNametags() ? "kinora.palette.names_show" : "kinora.palette.names_hide",
+                ReplayKeys.keyName(ReplayKeys.Action.NAMES).getString(), KinoraUi::toggleNames));
         a.add(act("kinora.palette.live_cut", ReplayKeys.keyName(ReplayKeys.Action.LIVE_CUT).getString(), () -> {
             this.minecraft.gui.setScreen(null);
             dev.kinora.mc.editor.LiveCutSession.start();
@@ -870,6 +879,20 @@ public class EditorScreen extends Screen {
     private static double parse(String s, double fallback) {
         try {
             return Double.parseDouble(s.trim().replace(',', '.'));
+        } catch (NumberFormatException e) {
+            return fallback;
+        }
+    }
+
+    /** Replay time typed as m:ss.ss, h:mm:ss or plain seconds. */
+    static double parseClock(String s, double fallback) {
+        String[] parts = s.trim().replace(',', '.').split(":");
+        try {
+            double v = 0;
+            for (String p : parts) {
+                v = v * 60 + Double.parseDouble(p.isBlank() ? "0" : p);
+            }
+            return v < 0 ? fallback : v;
         } catch (NumberFormatException e) {
             return fallback;
         }

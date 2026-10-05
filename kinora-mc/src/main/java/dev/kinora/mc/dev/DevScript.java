@@ -63,6 +63,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * expect replay|screen &lt;Name&gt;|noscreen|playing|paused|moved &lt;blocks&gt;
  * mark                             remember the camera position (for "moved")
  * state                            log screen, replay time, editor and camera
+ * pathcheck [fix]                where the selected shot's camera is inside a block or a block hides its subject;
+ *                                  "fix" first moves a keyed path out of blocks (seek to the shot first)
+ * names on|off                     show or hide name tags over players and named mobs
  * clip &lt;start&gt; &lt;end&gt;               export seconds start..end of the open replay to kinora/replays/script_clip.kinora
  * photo [width]                    a still of the current view (default 3840 wide); then "waitfor rendered"
  * seek &lt;seconds&gt;                   move replay time (seconds from the replay's start)
@@ -364,6 +367,12 @@ public final class DevScript {
                 } catch (IOException e) {
                     fail("clip: " + e.getMessage());
                 }
+            }
+            case "pathcheck" -> pathcheck(parts.length > 1 && parts[1].equals("fix"));
+            case "names" -> {
+                // names on|off: show or hide the name tags over players and named mobs.
+                ReplayManager.INSTANCE.scene().setHideNametags(parts[1].equals("off"));
+                log("# names " + (ReplayManager.INSTANCE.scene().hideNametags() ? "hidden" : "shown"));
             }
             case "renderset" -> {
                 // renderset {"projection": "EQUIRECTANGULAR", "audio": false}: applies to the following renders.
@@ -849,6 +858,54 @@ public final class DevScript {
     private static void fail(String message) {
         failures++;
         log("FAIL " + message);
+    }
+
+    /** pathcheck [fix]: blocked or hidden camera samples of the selected shot, every 0.05 s of shot time. */
+    private static void pathcheck(boolean fix) {
+        var editor = ReplayManager.INSTANCE.editor();
+        var shot = editor.shot();
+        if (shot == null) {
+            fail("pathcheck: no shot selected");
+            return;
+        }
+        var scene = editor.scene();
+        if (fix) {
+            int added = dev.kinora.core.project.PathFixer.fix(shot, scene);
+            log("# pathcheck " + shot.name + ": fix added " + added + " keys");
+        }
+        int blocked = 0;
+        int hidden = 0;
+        StringBuilder where = new StringBuilder();
+        for (double t = 0; t <= shot.duration + 1e-9; t += 0.05) {
+            var frame = dev.kinora.core.project.ShotEvaluator.evaluate(shot, t, scene);
+            var c = frame.camera();
+            var cam = new dev.kinora.core.camera.Vec3d(c.x(), c.y(), c.z());
+            boolean in = scene.blocked(cam);
+            boolean occluded = false;
+            int subject = shot.lookAt.enabled && shot.lookAt.targetEntity != Integer.MIN_VALUE ? shot.lookAt.targetEntity
+                    : shot.rig.mode != dev.kinora.core.project.Shot.RigMode.PATH ? shot.rig.targetEntity : Integer.MIN_VALUE;
+            dev.kinora.core.camera.Vec3d target = null;
+            if (subject != Integer.MIN_VALUE) {
+                var feet = scene.entityPosition(subject, frame.replayTicks());
+                if (feet != null) {
+                    target = new dev.kinora.core.camera.Vec3d(feet.x(), feet.y() + scene.entityAimHeight(subject), feet.z());
+                }
+            } else if (shot.lookAt.enabled && shot.lookAt.point != null) {
+                target = shot.lookAt.point;
+            }
+            if (!in && target != null) {
+                var hit = scene.clip(cam, target);
+                occluded = hit.sub(target).length() > 0.6;
+            }
+            if (in || occluded) {
+                blocked += in ? 1 : 0;
+                hidden += occluded ? 1 : 0;
+                if (where.length() < 600) {
+                    where.append(String.format(java.util.Locale.ROOT, " %.2f%s(%.1f %.1f %.1f)", t, in ? "B" : "H", c.x(), c.y(), c.z()));
+                }
+            }
+        }
+        log("# pathcheck " + shot.name + ": " + blocked + " samples inside blocks, " + hidden + " with the subject hidden" + where);
     }
 
     private static void log(String message) {

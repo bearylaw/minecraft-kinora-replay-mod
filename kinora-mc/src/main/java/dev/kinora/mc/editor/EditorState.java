@@ -380,6 +380,52 @@ public final class EditorState implements CameraDirector.PathSource {
         setPlayhead(playhead);
     }
 
+    /**
+     * Moves a shot to start at another moment of the replay (in replay ticks), keeping its length, its
+     * speed and any speed changes keyed in it.
+     */
+    public void setReplayStart(Shot shot, double ticks) {
+        projects.edit(() -> {
+            Track time = shot.track(Tracks.TIME);
+            if (time.keys.isEmpty()) {
+                time.put(new Keyframe(0, 0).withInterpolation(Interpolation.LINEAR));
+                time.put(new Keyframe(shot.duration, shot.duration * 20));
+            }
+            double delta = Math.max(0, ticks) - time.keys.getFirst().value[0];
+            for (Keyframe k : time.keys) {
+                k.value[0] += delta;
+            }
+            time.changed();
+        });
+        setPlayhead(playhead);
+    }
+
+    /**
+     * Makes a shot end at another moment of the replay (in replay ticks). A shot at an even speed keeps
+     * its speed and gets longer or shorter; a shot with keyed speed changes keeps its length and its
+     * changes are stretched to the new end. An end at or before the start is ignored.
+     */
+    public void setReplayEnd(Shot shot, double ticks) {
+        double start = shot.replayTicks(0);
+        double end = shot.replayTicks(shot.duration);
+        if (ticks <= start + 0.5 || end <= start) {
+            return;
+        }
+        Track time = shot.existing(Tracks.TIME);
+        if (time == null || time.keys.size() <= 2) {
+            setDuration(shot, (ticks - start) / (20 * speedOf(shot)));
+            return;
+        }
+        double factor = (ticks - start) / (end - start);
+        projects.edit(() -> {
+            for (Keyframe k : time.keys) {
+                k.value[0] = start + (k.value[0] - start) * factor;
+            }
+            time.changed();
+        });
+        setPlayhead(playhead);
+    }
+
     public void reset() {
         shotId = null;
         selection.clear();

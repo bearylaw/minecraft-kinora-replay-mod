@@ -15,11 +15,13 @@
     "KeyMappingMixin",
     "EntityRenderDispatcherMixin",
     "FramerateLimitMixin",
+    "FriendsKeyMixin",
     "MinecraftGlowMixin",
     "MinecraftTimingMixin",
     "MoveEntityPacketAccessor",
     "RotateHeadPacketAccessor",
     "SectionResortMixin",
+    "SkinLookupMixin",
     "SynchedEntityDataAccessor",
     "SpriteAnimationMixin",
     "TranslucentResortMixin"

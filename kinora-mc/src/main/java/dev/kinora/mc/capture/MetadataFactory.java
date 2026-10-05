@@ -28,6 +28,8 @@ final class MetadataFactory {
         m.singleplayer = minecraft.hasSingleplayerServer();
         if (m.singleplayer && minecraft.getSingleplayerServer() != null) {
             m.worldName = minecraft.getSingleplayerServer().getWorldData().getLevelName();
+            m.worldFolder = minecraft.getSingleplayerServer().getWorldPath(net.minecraft.world.level.storage.LevelResource.ROOT)
+                    .toAbsolutePath().normalize().getFileName().toString();
         } else {
             ServerData server = minecraft.getCurrentServer();
             if (server != null) {

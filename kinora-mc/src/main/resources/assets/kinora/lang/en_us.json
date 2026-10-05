@@ -425,5 +425,15 @@
   "kinora.menu.hideables": "Mod elements...",
   "kinora.hideables.title": "Other mods' elements in replays and renders",
   "kinora.hideables.shown": "Shown: %s",
-  "kinora.hideables.hidden": "Hidden: %s"
+  "kinora.hideables.hidden": "Hidden: %s",
+  "kinora.keys.names": "Player names (show / hide)",
+  "kinora.menu.names_shown": "Player names: shown (%s)",
+  "kinora.menu.names_hidden": "Player names: hidden (%s)",
+  "kinora.palette.names_hide": "Names: hide player names",
+  "kinora.palette.names_show": "Names: show player names",
+  "kinora.names.title": "Player names",
+  "kinora.names.hidden": "Hidden in the replay and in renders. %s shows them.",
+  "kinora.names.shown": "Shown. %s hides them.",
+  "kinora.inspector.replay_start": "Replay start",
+  "kinora.inspector.replay_end": "Replay end"
 }

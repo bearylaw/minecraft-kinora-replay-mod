@@ -40,6 +40,8 @@ public final class ReplayMetadata {
     public String serverName;
     public String serverAddress;
     public String worldName;
+    /** Singleplayer: the save's folder name under {@code saves/} (can differ from its name). */
+    public String worldFolder;
     public String startDimension;
     public PlayerInfo player;
     public List<String> resourcePacks = new ArrayList<>();

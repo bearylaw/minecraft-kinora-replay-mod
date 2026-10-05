@@ -44,7 +44,8 @@ public final class ReplayKeys {
         ROLL_RESET(GLFW.GLFW_KEY_X, -1),
         EDITOR(GLFW.GLFW_KEY_E, GLFW.GLFW_KEY_TAB),
         PHOTO(GLFW.GLFW_KEY_B, -1),
-        LIVE_CUT(GLFW.GLFW_KEY_R, -1);
+        LIVE_CUT(GLFW.GLFW_KEY_R, -1),
+        NAMES(GLFW.GLFW_KEY_V, -1);
 
         final int primary;
         final int secondary;

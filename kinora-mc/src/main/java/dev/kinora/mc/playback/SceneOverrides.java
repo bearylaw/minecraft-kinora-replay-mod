@@ -35,6 +35,7 @@ public final class SceneOverrides {
     private final Set<Category> hiddenCategories = EnumSet.noneOf(Category.class);
     private final IntSet hiddenEntities = new IntOpenHashSet();
     private final IntSet highlighted = new IntOpenHashSet();
+    private static final String HIDE_NAMES_FLAG = "hideNames";
     private boolean hideNametags;
     private boolean hideChat;
     /** Set by a render from the shot's world tracks; wins over the settings above. NaN: none. */
@@ -47,7 +48,7 @@ public final class SceneOverrides {
         hiddenCategories.clear();
         hiddenEntities.clear();
         highlighted.clear();
-        hideNametags = false;
+        hideNametags = dev.kinora.mc.ui.UiState.flag(HIDE_NAMES_FLAG);
         hideChat = false;
     }
 
@@ -100,8 +101,14 @@ public final class SceneOverrides {
         return hideNametags;
     }
 
+    /** Hides or shows the name tags over players and named mobs; remembered for later replays. */
     public void setHideNametags(boolean hide) {
         hideNametags = hide;
+        dev.kinora.mc.ui.UiState.setFlag(HIDE_NAMES_FLAG, hide);
+    }
+
+    public void toggleNametags() {
+        setHideNametags(!hideNametags);
     }
 
     public boolean hideChat() {

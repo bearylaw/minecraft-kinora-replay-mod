@@ -61,7 +61,7 @@ preserved by writers that rewrite metadata.
 | `kind` | `RECORDING`, `BUFFER` or `CLIP` |
 | `kinoraVersion`, `minecraftVersion`, `protocolVersion`, `loader`, `loaderVersion` | what wrote it |
 | `mods` | `[{id, version}]` loaded when recording |
-| `singleplayer`, `serverName`, `serverAddress`, `worldName`, `startDimension` | where |
+| `singleplayer`, `serverName`, `serverAddress`, `worldName`, `worldFolder`, `startDimension` | where (`worldFolder`: the singleplayer save's folder under `saves/`) |
 | `player` | `{name, uuid}` |
 | `resourcePacks` | enabled pack ids |
 | `startedAtMillis` | wall-clock start |

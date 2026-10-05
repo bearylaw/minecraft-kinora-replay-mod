@@ -9,6 +9,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.client.multiplayer.PlayerInfo;
+import net.minecraft.network.protocol.Packet;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -17,6 +18,8 @@ import net.minecraft.world.level.GameType;
 
 import org.jspecify.annotations.Nullable;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -33,6 +36,15 @@ final class Puppet {
     /** The recording player's synced values (skin layers, pose...), applied to the puppet. */
     private ClientState.@Nullable EntityData data;
     private boolean spawned;
+    /** The puppet's player-list entry is Kinora's stand-in, made before the server's arrived. */
+    private boolean syntheticInfo;
+    /**
+     * Mods' synced data on the recording player (NeoForge attachments: a robe, a title...), the latest
+     * of each kind. The server sends it once, at join: it is in a recording's opening state but not in
+     * the snapshots written later, and often arrives before the puppet exists. So it is kept for the
+     * whole session, across seeks, and applied every time the puppet spawns.
+     */
+    private final Map<String, Packet<?>> attachments = new LinkedHashMap<>();
 
     /** The level was rebuilt (respawn into another dimension, seek): spawn again on the next state. */
     void levelChanged() {
@@ -47,6 +59,37 @@ final class Puppet {
         equipment = null;
         data = null;
         spawned = false;
+        syntheticInfo = false;
+    }
+
+    /** Remembers a mod's synced data aimed at the recording player; see {@link #attachments}. */
+    void rememberAttachments(String kind, Packet<?> packet) {
+        attachments.remove(kind);
+        attachments.put(kind, packet);
+    }
+
+    /**
+     * The server's own player-list entry for the recording player arrived after the puppet was given
+     * a stand-in one (a snapshot restores Kinora's records first): the stand-in has no skin, so it is
+     * dropped for the real one and the puppet spawned again with it.
+     */
+    void realInfoArrived(ClientPacketListener listener, Packet<?> addPlayer) {
+        if (!syntheticInfo || uuid == null) {
+            return;
+        }
+        syntheticInfo = false;
+        listener.handlePlayerInfoRemove(new net.minecraft.network.protocol.game.ClientboundPlayerInfoRemovePacket(java.util.List.of(uuid)));
+        if (addPlayer instanceof net.minecraft.network.protocol.game.ClientboundPlayerInfoUpdatePacket update) {
+            listener.handlePlayerInfoUpdate(update);
+        }
+        spawned = false;
+        if (last != null) {
+            ensureSpawned();
+        }
+    }
+
+    @Nullable UUID uuid() {
+        return uuid;
     }
 
     /** The puppet entity, if it is in the level. */
@@ -158,6 +201,7 @@ final class Puppet {
             // Servers that hide the tab list never introduce the player; a remote player needs it.
             GameProfile profile = new GameProfile(uuid, name == null ? "Player" : name);
             listener.handlePlayerInfoUpdate(SyntheticPackets.addPlayerInfo(profile, GameType.SURVIVAL, false, mc.level.registryAccess()));
+            syntheticInfo = true;
         }
         listener.handleAddEntity(SyntheticPackets.addPlayerEntity(entityId, uuid, last.x(), last.y(), last.z(),
                 last.yRot(), last.xRot(), last.yHeadRot()));
@@ -172,9 +216,21 @@ final class Puppet {
             }
             applyEquipment(puppet);
             applyData(puppet);
+            applyAttachments(listener);
             spawned = true;
         }
         return puppet;
+    }
+
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    private void applyAttachments(ClientPacketListener listener) {
+        for (Packet<?> packet : attachments.values()) {
+            try {
+                ((Packet) packet).handle(listener);
+            } catch (RuntimeException e) {
+                dev.kinora.mc.KinoraMod.LOG.warn("Kinora could not give the recorded player their {}", packet.type().id(), e);
+            }
+        }
     }
 
     /** Profile of the recording player as playback knows it. */

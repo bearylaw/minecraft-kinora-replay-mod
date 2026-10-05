@@ -28,12 +28,20 @@ public final class ReplayMenuScreen extends Screen {
                 .bounds(x, y + 72, 204, 20).build());
         addRenderableWidget(Button.builder(Component.translatable("kinora.menu.clip"), b -> this.minecraft.gui.setScreen(new ClipScreen(this)))
                 .bounds(x, y + 96, 204, 20).build());
+        boolean hidden = ReplayManager.INSTANCE.scene().hideNametags();
+        addRenderableWidget(Button.builder(Component.translatable(hidden ? "kinora.menu.names_hidden" : "kinora.menu.names_shown",
+                ReplayKeys.keyName(ReplayKeys.Action.NAMES)), b -> {
+            ReplayManager.INSTANCE.scene().toggleNametags();
+            rebuildWidgets();
+        }).bounds(x, y + 120, 204, 20).build());
+        int next = y + 144;
         if (!dev.kinora.mc.KinoraRuntimeImpl.INSTANCE.hideables().isEmpty()) {
             addRenderableWidget(Button.builder(Component.translatable("kinora.menu.hideables"), b -> this.minecraft.gui.setScreen(new HideablesScreen(this)))
-                    .bounds(x, y + 120, 204, 20).build());
+                    .bounds(x, next, 204, 20).build());
+            next += 24;
         }
         addRenderableWidget(Button.builder(Component.translatable("kinora.menu.exit"), b -> ReplayManager.INSTANCE.close())
-                .bounds(x, y + 156, 204, 20).build());
+                .bounds(x, next + 12, 204, 20).build());
     }
 
     @Override
