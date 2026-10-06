@@ -1,4 +1,10 @@
+<p align="center"><img src="kinora-mc/src/main/resources/kinora.png" alt="Kinora Replay icon" width="160"></p>
+
 # Kinora Replay
+
+**Record your gameplay, then film it again like a director.** Kinora records what you play, lets
+you fly a keyframed cinematic camera through the replay, and renders smooth, frame-exact video:
+paths, orbits, follow cams, speed ramps and color grading, with no lag in the final cut.
 
 Kinora Replay (Kinora for short) is a cinematic replay and camera mod for **Minecraft 26.2**
 (NeoForge 26.2.0.88, Java 25, client only).
@@ -729,6 +735,7 @@ version, the old one gets a branch named after it (`26.2`, ...) for fixes; see
 | `kinora-mc/` | The NeoForge mod: capture, playback, camera, editor, renderer, UI, mixins. |
 | `tools/inspector/` | `kinora-inspect`, a command-line tool for `.kinora` files. |
 | `tools/dev/` | Dev client scripts and in-game test scripts. |
+| `tools/branding/` | `KinoraIcon.java`, which draws the mod icon (`kinora-mc/src/main/resources/kinora.png`). |
 | `docs/` | Design, file format, internals, API guide, mixin list, status, examples. |
 | `UPGRADING.md`, `CHANGELOG.md` | Moving to a new Minecraft version; what changed. |
 | `CONTRIBUTING.md`, `SECURITY.md` | How to contribute; how to report security problems. |
