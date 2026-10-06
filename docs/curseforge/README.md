@@ -10,6 +10,7 @@
   Record your gameplay, then film it again like a director: fly a keyframed cinematic camera
   through the replay and render smooth, frame-exact video.
 - Category: Utility & QoL.
+- Release notes per version: `changelog-<version>.md` / `.html`, pasted the same way as the description.
 
 After editing `description.md`, rebuild the HTML (then re-add the `<br>` after the first bold
 line of the warning box):

@@ -1,8 +1,9 @@
 # Changelog
 
-## 0.1.0 (2026-10-03)
+## 0.1.0 (2026-10-07)
 
-First release, for Minecraft 26.2 and NeoForge 26.2.0.88, client only. It is the release candidate
+First release, for Minecraft 26.2 and NeoForge 26.2.0.88 (Java 25), client only. The release notes
+for players are in [`docs/curseforge/changelog-0.1.0.md`](docs/curseforge/changelog-0.1.0.md). It is the release candidate
 below plus these changes.
 
 ### Name and license
