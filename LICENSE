@@ -16,7 +16,8 @@ Kinora Replay projects published by bearceptive on Modrinth and CurseForge.
    a. read and study the source code;
    b. download builds from official sources and use them, including to make videos, streams,
       screenshots and other works, commercial or not; what you make with the Software is yours;
-   c. build the Software from source for your own use;
+   c. build and modify the Software for your own private use, without sharing the result except
+      as allowed in 1d;
    d. fork the repository on GitHub to prepare changes and offer them back as pull requests;
    e. include the Software in a modpack, as long as the modpack obtains the file from an official
       source (by referring to the official Modrinth or CurseForge project) instead of carrying a
@@ -29,12 +30,15 @@ Kinora Replay projects published by bearceptive on Modrinth and CurseForge.
    b. publish modified versions of the Software, or software that contains substantial parts of
       it;
    c. sell the Software, or charge for access to it;
-   d. remove or change this license or the copyright notices.
+   d. remove or change this license or the copyright notices;
+   e. use the name "Kinora" or "Kinora Replay", or its logo, for another project, or in a way that
+      suggests your project or build is official or endorsed by the copyright holder.
 
-3. Contributions. By submitting a contribution (for example a pull request), you confirm that you
+3. Contributions. By submitting a contribution (for example a pull request) to any part of this
+   repository, including kinora-api/ and sample-mod/, you confirm that you wrote it or otherwise
    have the right to submit it, and you grant the copyright holder a perpetual, worldwide,
    non-exclusive, royalty-free, irrevocable license to use, modify, distribute, sublicense and
-   relicense it under any terms.
+   relicense it under any terms. You keep the copyright in your contribution.
 
 4. Termination. If you break this license, the rights it grants you end automatically.
 

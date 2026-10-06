@@ -731,6 +731,7 @@ version, the old one gets a branch named after it (`26.2`, ...) for fixes; see
 | `tools/dev/` | Dev client scripts and in-game test scripts. |
 | `docs/` | Design, file format, internals, API guide, mixin list, status, examples. |
 | `UPGRADING.md`, `CHANGELOG.md` | Moving to a new Minecraft version; what changed. |
+| `CONTRIBUTING.md`, `SECURITY.md` | How to contribute; how to report security problems. |
 | `run/` | The dev client's game folder: replays, renders, FFmpeg, compat mods, test world. |
 
 ## License
@@ -738,7 +739,8 @@ version, the old one gets a branch named after it (`26.2`, ...) for fixes; see
 Kinora Replay is under the **Kinora Replay License** ([`LICENSE`](LICENSE)): free to use, also for
 videos you earn money with, and free to read and build for yourself, but **not to repost**. Builds
 are published only on GitHub, Modrinth and CurseForge; modpacks refer to the Modrinth or CurseForge
-project instead of carrying a copy. Contributions are welcome as pull requests.
+project instead of carrying a copy. Contributions are welcome as pull requests; see
+[`CONTRIBUTING.md`](CONTRIBUTING.md). Security problems: [`SECURITY.md`](SECURITY.md).
 
 The API (`kinora-api`) is LGPL-3.0-only ([`LICENSE-API`](LICENSE-API)), so other mods may use it
 freely, and the sample mod is MIT ([`sample-mod/LICENSE`](sample-mod/LICENSE)). Third-party notices

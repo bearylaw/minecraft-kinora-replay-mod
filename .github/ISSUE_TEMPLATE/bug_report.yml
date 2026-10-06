@@ -1,0 +1,29 @@
+name: Bug report
+description: Something does not work as it should.
+labels: [bug]
+body:
+  - type: input
+    id: versions
+    attributes:
+      label: Versions
+      description: Kinora, Minecraft and NeoForge.
+      placeholder: Kinora 0.1.0, Minecraft 26.2, NeoForge 26.2.0.88
+    validations:
+      required: true
+  - type: input
+    id: mods
+    attributes:
+      label: Other mods
+      description: Especially Sodium, Iris, Distant Horizons, and the shader pack if any.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you did, what you expected, and what happened instead.
+    validations:
+      required: true
+  - type: textarea
+    id: log
+    attributes:
+      label: Log
+      description: Attach `logs/latest.log` and the crash report if there is one.

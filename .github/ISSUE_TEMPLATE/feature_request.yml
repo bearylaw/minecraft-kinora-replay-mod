@@ -1,0 +1,11 @@
+name: Feature request
+description: An idea for Kinora.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: Idea
+      description: What you want to do, and what is missing or hard today.
+    validations:
+      required: true

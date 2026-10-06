@@ -39,3 +39,12 @@ run/
 **/src/generated/**/.cache/
 repo/
 !**/src/**/repo/
+
+### Local secrets ###
+.env
+.env.*
+local.properties
+*.pem
+*.key
+*.keystore
+*.jks
