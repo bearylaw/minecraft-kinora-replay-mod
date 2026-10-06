@@ -1,0 +1,131 @@
+<p><img src="https://raw.githubusercontent.com/bearylaw/minecraft-kinora-replay-mod/main/docs/curseforge/images/banner.png" alt="Kinora Replay"></p>
+<p><strong>Kinora Replay</strong> records what you play and lets you film it again like a movie director. Open a recording later, fly a camera through it, place a few camera points, and Kinora renders a smooth, perfectly timed video with no lag and no dropped frames, even if your game stutters.</p>
+<blockquote>
+<p><strong>⚠️ Read this first: making videos needs one free extra program, FFmpeg.</strong><br>
+Kinora does not include it. Without it you can still record, watch, edit and save image sequences, but not MP4 videos. Setting it up takes about 2 minutes: <strong><a href="#ffmpeg">jump to the FFmpeg setup</a></strong>.</p>
+</blockquote>
+<hr>
+<h2>How it works</h2>
+<p><img src="https://raw.githubusercontent.com/bearylaw/minecraft-kinora-replay-mod/main/docs/curseforge/images/how-it-works.png" alt="Record, film, render"></p>
+<ol>
+<li><strong>Record.</strong> Press <strong>F6</strong> while you play. Press <strong>F6</strong> again to stop.</li>
+<li><strong>Film.</strong> On the title screen, click <strong>Replays</strong> (the film icon) and open your recording. Press <strong>E</strong> to open the camera editor, fly to a good spot and press <strong>I</strong> to place a camera point. Move, place another one, and the camera glides between them.</li>
+<li><strong>Render.</strong> Click <strong>Render</strong>, choose a size and format, and click <strong>Render now</strong>. The video is saved in your Minecraft folder under <code>kinora/renders</code>.</li>
+</ol>
+<hr>
+<h2>Installation</h2>
+<ol>
+<li><strong>Minecraft 26.2 with NeoForge 26.2.0.88 or newer.</strong> The CurseForge app sets this up for you.</li>
+<li><strong>Kinora Replay.</strong> Install it like any other mod. It is client only: servers do not need it.</li>
+<li><strong>FFmpeg, for video.</strong> See the next section.</li>
+</ol>
+<p><a id="ffmpeg"></a></p>
+<h2>Setting up FFmpeg (for video)</h2>
+<p>FFmpeg is a free program that turns Kinora&#39;s frames into a video file. You only do this once per Minecraft profile.</p>
+<p><img src="https://raw.githubusercontent.com/bearylaw/minecraft-kinora-replay-mod/main/docs/curseforge/images/ffmpeg-setup.png" alt="FFmpeg setup in four steps"></p>
+<h3>Windows</h3>
+<ol>
+<li><p><strong>Download.</strong> Go to <strong><a href="https://www.gyan.dev/ffmpeg/builds/">gyan.dev/ffmpeg/builds</a></strong>. Under <em>release builds</em>, click <strong>ffmpeg-release-essentials.zip</strong>.</p>
+</li>
+<li><p><strong>Unzip.</strong> Right-click the downloaded <code>.zip</code> and choose <strong>Extract All</strong>. Inside, open the <code>ffmpeg-…-essentials_build</code> folder, then the <strong><code>bin</code></strong> folder. You only need <strong><code>ffmpeg.exe</code></strong>.</p>
+</li>
+<li><p><strong>Open your Minecraft folder.</strong> Start Minecraft with Kinora installed once, then close it.</p>
+<ul>
+<li><strong>CurseForge app:</strong> right-click your profile → <strong>Open Folder</strong>.</li>
+<li><strong>Prism Launcher:</strong> right-click the instance → <strong>Folder</strong>.</li>
+<li><strong>Official launcher:</strong> Installations → hover your installation → the folder icon.</li>
+</ul>
+</li>
+<li><p><strong>Copy <code>ffmpeg.exe</code> into <code>kinora/tools</code>.</strong> In that folder, open <strong><code>kinora</code></strong>, then <strong><code>tools</code></strong>, and put <code>ffmpeg.exe</code> there. If there is no <code>tools</code> folder yet, just create it. It should end up like this:</p>
+<pre><code>&lt;your profile folder&gt;
+├─ mods
+└─ kinora
+   └─ tools
+      └─ ffmpeg.exe
+</code></pre>
+</li>
+<li><p><strong>Check.</strong> In the game, open a replay, press <strong>E</strong>, click <strong>Render</strong>. The window now says <strong>FFmpeg: …kinora/tools/ffmpeg.exe</strong>, and the video formats (MP4 and others) can be picked.</p>
+</li>
+</ol>
+<h3>macOS and Linux</h3>
+<p>Install FFmpeg with your package manager (<code>brew install ffmpeg</code> on macOS, <code>sudo apt install ffmpeg</code> on Ubuntu / Debian). Kinora finds it on its own.</p>
+<h3>Other ways</h3>
+<ul>
+<li>Already have FFmpeg somewhere else? Set its path under <strong>Kinora&#39;s settings → FFmpeg path</strong> (or <code>ffmpegPath</code> in <code>config/kinora-client.toml</code>).</li>
+<li>An FFmpeg that is on your system PATH is found automatically too.</li>
+<li>Copying the whole <code>bin</code> folder into <code>kinora/tools</code> (so you get <code>kinora/tools/bin/ffmpeg.exe</code>) also works.</li>
+</ul>
+<hr>
+<h2>Using Kinora</h2>
+<h3>Recording</h3>
+<ul>
+<li><strong>F6</strong>: start / stop recording</li>
+<li><strong>F7</strong>: add a marker at an important moment</li>
+<li><strong>F8</strong>: save the last few minutes (the replay buffer, turn it on in the settings)</li>
+</ul>
+<p>Kinora also adds markers by itself for deaths, kills, explosions, advancements and more, so you can jump straight to the action.</p>
+<h3>Watching a replay</h3>
+<p>A replay opens paused, with the camera behind you.</p>
+<ul>
+<li><strong>K</strong>: play / pause, <strong>J / L</strong>: back / forward 5 seconds</li>
+<li><strong>[ / ]</strong>: slower / faster</li>
+<li><strong>N / M</strong>: previous / next marker</li>
+<li><strong>F</strong>: free camera (fly with WASD, Space and Shift)</li>
+<li><strong>G</strong>: follow the player or mob you are looking at, <strong>O</strong>: orbit around it</li>
+<li><strong>B</strong>: take a 4K photo</li>
+<li><strong>E</strong>: open the camera editor, <strong>Esc</strong>: replay menu</li>
+</ul>
+<p>All replay keys can be changed under <strong>Esc → Replay keys</strong>.</p>
+<p><img src="https://raw.githubusercontent.com/bearylaw/minecraft-kinora-replay-mod/main/docs/curseforge/images/replay.jpg" alt="Watching a replay with the free camera"></p>
+<h3>The camera editor</h3>
+<p>The first time you open it, a short guide explains everything (the <strong>?</strong> button shows it again).</p>
+<ul>
+<li><strong>New Shot</strong> starts a 5-second shot at the current moment.</li>
+<li>Hold the <strong>right mouse button</strong> and use <strong>WASD</strong> to fly. Press <strong>I</strong> to place a camera point.</li>
+<li><strong>Space</strong> plays the shot. The camera&#39;s path is drawn in the world as a blue line.</li>
+<li><strong>Templates</strong> add ready-made moves: orbit, dolly zoom, crane up, fly-through, reveal and more.</li>
+<li><strong>Ctrl+K</strong> finds any action by name. <strong>Ctrl+Z</strong> undoes. Your project saves itself.</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/bearylaw/minecraft-kinora-replay-mod/main/docs/curseforge/images/editor.jpg" alt="The camera editor with its timeline"></p>
+<p><img src="https://raw.githubusercontent.com/bearylaw/minecraft-kinora-replay-mod/main/docs/curseforge/images/camera-path.jpg" alt="A camera path drawn in the world"></p>
+<h3>Rendering</h3>
+<p>Click <strong>Render</strong> in the editor. Pick the size (up to 4K and beyond), frame rate (up to 120 fps) and format, then <strong>Render now</strong>, or <strong>Add to queue</strong> to render later. <strong>Esc</strong> stops a render; you can resume it from the queue.</p>
+<p><img src="https://raw.githubusercontent.com/bearylaw/minecraft-kinora-replay-mod/main/docs/curseforge/images/render-dialog.jpg" alt="The render window"></p>
+<hr>
+<h2>Features</h2>
+<ul>
+<li>🎬 <strong>Cinematic camera</strong>: keyframed paths, orbits, follow cams, look-at, camera shake, speed ramps, slow motion, freeze frames and reverse</li>
+<li>🎞️ <strong>Perfect renders</strong>: every frame is rendered at its exact time, so videos are smooth no matter how fast your PC is; the same project gives the same frames every time</li>
+<li>🎨 <strong>Looks</strong>: color grading, exposure, vignette, film grain, bloom, letterbox, depth of field with autofocus, motion blur</li>
+<li>🌅 <strong>World control</strong>: change the time of day and weather in your shots</li>
+<li>🔊 <strong>Sound</strong>: renders include the game sounds as the camera hears them, plus optional music</li>
+<li>🌐 <strong>360° and 3D</strong> video, ready for YouTube</li>
+<li>✂️ <strong>Live cut</strong>: switch between up to nine cameras while the replay plays, like a live TV director</li>
+<li>📷 <strong>Photo mode</strong>: 4K, 8K or 16K stills from any moment</li>
+<li>📦 <strong>Share</strong>: pack a replay and its project into one file for a friend</li>
+<li>🎥 <strong>Pro formats</strong>: MP4 (H.264, H.265, AV1), GPU encoding (NVIDIA / AMD / Intel), ProRes, WebM, PNG and OpenEXR sequences, depth pass, transparent sky</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/bearylaw/minecraft-kinora-replay-mod/main/docs/curseforge/images/far-terrain.jpg" alt="Far terrain in a replay"></p>
+<hr>
+<h2>Compatibility</h2>
+<ul>
+<li><strong>Sodium</strong> and <strong>Iris</strong> (shader packs): supported, no setup needed</li>
+<li><strong>Distant Horizons</strong>: far terrain shows up in replays</li>
+<li><strong>Multiplayer</strong>: record on any server; servers do not need Kinora</li>
+<li><strong>Vulkan</strong>: works; set <code>earlyWindowControl = false</code> in <code>config/fml.toml</code></li>
+</ul>
+<hr>
+<h2>FAQ</h2>
+<p><strong>The render window says &quot;FFmpeg not found&quot;.</strong> <code>ffmpeg.exe</code> is not in the right place. It must be directly in <code>kinora/tools</code> inside your <em>profile</em> folder (the one that also has <code>mods</code> in it), not in the zip&#39;s folder. See <a href="#ffmpeg">the FFmpeg setup</a>.</p>
+<p><strong>Some formats are greyed out.</strong> Your FFmpeg does not support them. The &quot;essentials&quot; build has everything except AV1.</p>
+<p><strong>Do I need FFmpeg for screenshots or PNG sequences?</strong> No. Photos and PNG / OpenEXR image sequences work without it.</p>
+<p><strong>Where are my recordings and videos?</strong> In your profile folder: recordings in <code>kinora/replays</code>, videos in <code>kinora/renders</code>.</p>
+<p><strong>Can I use Kinora in my modpack?</strong> Yes, as long as the pack downloads it from this CurseForge page (do not put the file itself in your pack).</p>
+<p><strong>Can I use it for videos I make money with?</strong> Yes. What you make with Kinora is yours.</p>
+<hr>
+<h2>Links</h2>
+<ul>
+<li><strong>Source code and bug reports:</strong> <a href="https://github.com/bearylaw/minecraft-kinora-replay-mod">GitHub</a> (<a href="https://github.com/bearylaw/minecraft-kinora-replay-mod/issues">report a bug</a>)</li>
+<li><strong>License:</strong> free to use and to make videos with, including monetised ones. Please don&#39;t re-upload the mod; see the <a href="https://github.com/bearylaw/minecraft-kinora-replay-mod/blob/main/LICENSE">license</a>.</li>
+</ul>
+<p><em>Kinora Replay is not an official Minecraft product and is not approved by or associated with Mojang or Microsoft.</em></p>
